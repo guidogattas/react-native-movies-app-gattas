@@ -1,20 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, SafeAreaView, View } from 'react-native';
+import Home from './src/screens/Home';
+import Products from './src/screens/Products';
+import { useState } from 'react';
 
 export default function App() {
+
+  const [categorySelected, setCategorySelected] = useState ("")
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.container} >
+
+      {
+        categorySelected ?
+      <Products
+        category={categorySelected}
+        setCategorySelected={setCategorySelected}
+      />
+          :
+      <Home
+        setCategorySelected={setCategorySelected}
+      />}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    height: '100%',
+  }
 });
