@@ -2,24 +2,23 @@ import { Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { colors } from '../theme/colors'
 
-const CategoryItem = ({ setCategorySelected, category }) => {
-
-  const handleCategoryPress = () => {
-  setCategorySelected(category);
-}
-
+const CategoryItem = ({ navigation, item }) => {
 
   return (
     <TouchableOpacity
-      onPress={handleCategoryPress}	
+      onPress={()=>navigation.navigate('products', {item : item})}	
     >
-      <Text style={styles.categoryText}>{category}</Text>
+      <Text style={styles.categoryText}>
+        {item}
+      </Text>
     </TouchableOpacity>
   )
 }
 
 const styles = StyleSheet.create({
   categoryText: {
+    fontFamily: 'JosefinRegular',
+    textTransform: 'capitalize',
     fontSize: 20,
     margin: 2,
     marginHorizontal: 20,
@@ -28,7 +27,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 8,
     marginVertical: 4,
-
     borderColor: colors.lightBlue,
     borderRadius: 10,
     borderWidth: 2,

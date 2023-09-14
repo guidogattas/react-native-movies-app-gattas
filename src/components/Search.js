@@ -34,7 +34,7 @@ export default Search
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: colors.heavyBlue,
+        backgroundColor: colors.lime,
         height: 100,
         justifyContent: 'center',
 
