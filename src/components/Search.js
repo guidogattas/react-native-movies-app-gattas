@@ -34,7 +34,7 @@ export default Search
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: colors.lime,
+        backgroundColor: colors.white,
         height: 100,
         justifyContent: 'center',
 
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     input: {
         width: '88%',
         borderWidth: 3,
-        borderColor: colors.lightBlue,
+        borderColor: colors.lightGreen,
         borderRadius: 8,
         padding: 10,
         fontSize: 20,

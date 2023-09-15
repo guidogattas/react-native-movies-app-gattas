@@ -1,13 +1,23 @@
-import { StyleSheet, SafeAreaView } from 'react-native'
+import { StyleSheet, Text, Image, ScrollView  } from 'react-native'
 import React from 'react'
 import Categories from '../components/Categories'
+import { colors } from '../theme/colors'
 
 const Home = ({ navigation }) => {
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Categories navigation={navigation} />
-    </SafeAreaView>
+    <ScrollView style={styles.container}>
+      <Image
+        style={styles.image}
+        source={require('../../assets/images/costo-plataforma.jpg')}
+      />
+      <Text style={styles.text}>
+        BIENVENIDOS A NUESTRO E-COMMERCE
+      </Text>
+      <Categories
+        navigation={navigation}
+      />
+    </ScrollView>
   )
 }
 
@@ -16,6 +26,19 @@ export default Home
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: '100%',
+    backgroundColor: colors.orange,
+  },
+  text: {
+    textAlign: 'center',
+    marginVertical: 20,
+    marginHorizontal: 10,
+    color: colors.white,
+    fontFamily: 'JosefinBold',
+    fontSize: 30,
+  },
+  image: {
+    height: 200,
+    width: "100%",
+    marginVertical: 40,
   }
 })

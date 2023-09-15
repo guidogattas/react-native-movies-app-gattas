@@ -1,29 +1,29 @@
 import { Button, Image, StyleSheet, Text, View, SafeAreaView } from 'react-native'
-import { products } from '../data/products'
 import React from 'react'
+import { colors } from '../theme/colors';
 
-const ProductDetail = () => {
-    const initialProd = products[0]
-    console.log(initialProd.images[0])
+
+const ProductDetail = ({route}) => {
+    const selectedItem = route.params.selectedItem;
 
     return (
-        <SafeAreaView >
-            <View style={styles.container}>
+        <SafeAreaView style={styles.container} >
+            <View style={styles.view} >
                 <Image
                     style={styles.image}
                     source={{
-                        uri: initialProd.images[2],
+                        uri: selectedItem.images[0],
                     }
                     }
                 />
-                <Text style={styles.textTitle} > Título: {initialProd.title}</Text>
-                <Text style={styles.text}> Descripción: {initialProd.description}</Text>
-                <Text style={styles.text}> Precio: ${initialProd.price}</Text>
+                <Text style={styles.textTitle} > Título: {selectedItem.title}</Text>
+                <Text style={styles.text}> Descripción: {selectedItem.description}</Text>
+                <Text style={styles.text}> Precio: ${selectedItem.price}</Text>
             </View>
             <Button
                 title="Agregar al Carrito" color={"green"} onPress={() => { console.log("Botón Test") }}
                 />
-            <Text style={styles.text}> ⭐Rating: {initialProd.rating}</Text>
+            <Text style={styles.text}> ⭐Rating: {selectedItem.rating}</Text>
         </SafeAreaView>
     )
 }
@@ -32,11 +32,16 @@ export default ProductDetail
 
 const styles = StyleSheet.create({
     container: {
+        marginTop: 40,
+    },
+    view: {
         alignItems: 'center',
+        backgroundColor: colors.white,
     },
     image: {
         height: 300,
         width: "100%",
+        resizeMode:'contain',
     },
     textTitle: {
         fontFamily: 'JosefinBold',

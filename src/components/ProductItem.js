@@ -7,20 +7,24 @@ const ProductItem = ({ item, navigation }) => {
     const { height, width } = useWindowDimensions()
 
     return (
-        <View style={styles.container}>
-            <Pressable onPress={()=>navigation.navigate('productDetail')}>
-
-                <Text style={width < 300 ? styles.textMin : styles.text}>{item.title}</Text>
-
-                <Text style={styles.text}>{`$${item.price}`}</Text>
+        <View>
+            <Pressable
+                style={styles.container}
+                onPress={() => navigation.navigate('productDetail', { selectedItem: item })}
+            >
+                <Image
+                    style={styles.image}
+                    source={{ uri: item.images[0] }}
+                />
+                <View style={styles.textContainer}>
+                    <Text
+                        style={width < 300 ? styles.textMin : styles.text}
+                    >
+                        {item.title}
+                    </Text>
+                    <Text style={styles.text}>{`$${item.price}`}</Text>
+                </View>
             </Pressable>
-            <Image
-                style={styles.image}
-                height={50}
-                width={50}
-                source={{ uri: item.images[0] }}
-                resizeMode="cover"
-            />
         </View>
     )
 }
@@ -29,27 +33,35 @@ export default ProductItem
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 20,
-        marginVertical: 10,
-        borderColor: colors.violet,
-        borderRadius: 10,
-        borderWidth: 2,
-        height: 100,
-        justifyContent: 'space-between',
         flexDirection: 'row',
         alignItems: 'center',
+        marginHorizontal: 20,
+        marginVertical: 10,
+        backgroundColor: colors.white,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderColor: colors.mediumGreen,
+        padding: 10,
+        elevation: 3,
+    },
+    textContainer: {
+        marginLeft: 10,
     },
     text: {
         fontFamily: 'JosefinRegular',
         fontSize: 16,
-        marginLeft: 10,
         textTransform: 'capitalize',
+        color: colors.heavyBlue,
     },
     textMin: {
-        fontSize: 10,
+        fontSize: 12,
+        color: colors.mediumGray,
     },
     image: {
-        marginRight: 20,
-    }
-
-})
+        height: 80,
+        width: 80,
+        marginRight: 10,
+        borderRadius: 5,
+        resizeMode: 'contain',
+    },
+});

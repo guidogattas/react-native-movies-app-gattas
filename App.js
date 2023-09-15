@@ -1,11 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet } from 'react-native';
-import Home from './src/screens/Home';
-import Products from './src/screens/Products';
-import { useState } from 'react';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
-import ProductDetail from './src/screens/ProductDetail';
 import RouteNavigation from './src/navigation/RouteNavigation';
 
 
