@@ -4,7 +4,7 @@ import { colors } from '../theme/colors'
 import { useWindowDimensions } from 'react-native'
 
 const ProductItem = ({ item, navigation }) => {
-    const { height, width } = useWindowDimensions()
+    const { width } = useWindowDimensions()
 
     return (
         <View>

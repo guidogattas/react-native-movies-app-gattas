@@ -4,7 +4,7 @@ import Home from '../screens/Home'
 import ProductDetail from '../screens/ProductDetail'
 import Products from '../screens/Products'
 import { colors } from '../theme/colors'
-import { Button, Image, Pressable } from 'react-native'
+import { Image, Pressable } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator()

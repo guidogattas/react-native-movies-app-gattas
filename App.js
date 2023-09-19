@@ -3,6 +3,8 @@ import { StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import { NavigationContainer } from '@react-navigation/native';
 import RouteNavigation from './src/navigation/RouteNavigation';
+import TabNav from './src/navigation/TabNav';
+import { screensEnabled } from 'react-native-screens';
 
 
 export default function App() {
@@ -17,7 +19,8 @@ export default function App() {
 
   return (
     <NavigationContainer style={styles.container} >
-      <RouteNavigation/>
+      {/* <RouteNavigation/> */}
+      <TabNav    />
    </NavigationContainer>
   );
 }
