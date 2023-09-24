@@ -1,9 +1,14 @@
-import { StyleSheet, Text, Image, ScrollView  } from 'react-native'
+import { StyleSheet, Text, Image, ScrollView } from 'react-native'
 import React from 'react'
 import Categories from '../components/Categories'
 import { colors } from '../theme/colors'
+// import { useSelector } from 'react-redux'
 
 const Home = ({ navigation }) => {
+
+
+  // const categories = useSelector((state) => state.homeSlice.allCategories)
+  // console.log(categories)
 
   return (
     <ScrollView style={styles.container}>

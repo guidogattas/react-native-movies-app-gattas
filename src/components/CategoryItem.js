@@ -1,17 +1,17 @@
-import { Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { Text, StyleSheet, Pressable } from 'react-native'
 import React from 'react'
 import { colors } from '../theme/colors'
 
 const CategoryItem = ({ navigation, item }) => {
 
   return (
-    <TouchableOpacity
-      onPress={()=>navigation.navigate('products', {item : item})}	
+    <Pressable
+      onPress={() => navigation.navigate('products', { item: item })}
     >
       <Text style={styles.categoryText}>
         {item}
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 

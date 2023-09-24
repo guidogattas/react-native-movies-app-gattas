@@ -13,7 +13,6 @@ const headerOptions = (title) => ({
     title: title,
     headerTitleAlign: 'center',
     headerStyle: {
-        width: '100%',
         backgroundColor: colors.lightGreen,
     },
     headerTitleStyle: {
@@ -45,7 +44,7 @@ const RouteNavigation = () => {
                         <Pressable onPress={() => {
                             alert('Próximamente')
                         }}>
-                            <Feather name="menu" size={24} color="black"/>
+                            <Feather name="menu" size={24} color="black" />
                         </Pressable>
                     ),
                 }}

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { FlatList, StyleSheet,  SafeAreaView } from 'react-native'
-import { products } from '../data/products'
+import { FlatList, StyleSheet, SafeAreaView } from 'react-native'
+// import { products } from '../data/products'
 import Search from '../components/Search'
 import ProductItem from '../components/ProductItem'
 import { colors } from '../theme/colors'
+import { useSelector } from 'react-redux'
 
 
 const Products = ({ route, navigation }) => {
@@ -11,6 +12,9 @@ const Products = ({ route, navigation }) => {
   const [text, setText] = useState('')
   const [categoryProd, setCategoryProd] = useState([])
   const { item } = route.params;
+  console.log(products)
+
+  const products = useSelector((state) => state.homeSlice.allProducts)
 
   useEffect(() => {
     const categoryProducts = products.filter((el) => el.category === item);
@@ -32,7 +36,7 @@ const Products = ({ route, navigation }) => {
       <FlatList
         data={categoryProd}
         keyExtractor={categoryProd.id}
-                        style={styles.flatList}
+        style={styles.flatList}
         renderItem={({ item }) =>
           <ProductItem
             navigation={navigation}
