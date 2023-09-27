@@ -33,7 +33,7 @@ const LogoTitle = () => {
     )
 }
 
-const RouteNavigation = () => {
+const RootNavigation = () => {
     return (
         <Stack.Navigator initialRouteName='home'>
             <Stack.Screen component={Home} name='home'
@@ -61,4 +61,4 @@ const RouteNavigation = () => {
     )
 }
 
-export default RouteNavigation
+export default RootNavigation

@@ -1,10 +1,15 @@
 import { Button, Image, StyleSheet, Text, View, SafeAreaView } from 'react-native'
 import React from 'react'
 import { colors } from '../theme/colors';
+import { useSelector } from 'react-redux';
 
 
-const ProductDetail = ({route}) => {
-    const selectedItem = route.params.selectedItem;
+const ProductDetail = () => {
+    const productSelected = useSelector(
+        (state) => state.homeSlice.productSelected
+    );
+
+    const item = productSelected;
 
     return (
         <SafeAreaView style={styles.container} >
@@ -12,18 +17,18 @@ const ProductDetail = ({route}) => {
                 <Image
                     style={styles.image}
                     source={{
-                        uri: selectedItem.images[0],
+                        uri: item.images[0],
                     }
                     }
                 />
-                <Text style={styles.textTitle} > Título: {selectedItem.title}</Text>
-                <Text style={styles.text}> Descripción: {selectedItem.description}</Text>
-                <Text style={styles.text}> Precio: ${selectedItem.price}</Text>
+                <Text style={styles.textTitle} > Título: {item.title}</Text>
+                <Text style={styles.text}> Descripción: {item.description}</Text>
+                <Text style={styles.text}> Precio: ${item.price}</Text>
             </View>
             <Button
                 title="Agregar al Carrito" color={"green"} onPress={() => { console.log("Botón Test") }}
-                />
-            <Text style={styles.text}> ⭐Rating: {selectedItem.rating}</Text>
+            />
+            <Text style={styles.text}> ⭐Rating: {item.rating}</Text>
         </SafeAreaView>
     )
 }
@@ -41,7 +46,7 @@ const styles = StyleSheet.create({
     image: {
         height: 300,
         width: "100%",
-        resizeMode:'contain',
+        resizeMode: 'contain',
     },
     textTitle: {
         fontFamily: 'JosefinBold',

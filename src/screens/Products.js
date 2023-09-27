@@ -5,6 +5,7 @@ import Search from '../components/Search'
 import ProductItem from '../components/ProductItem'
 import { colors } from '../theme/colors'
 import { useSelector } from 'react-redux'
+import { useGetCategoriesQuery } from '../services/ecApi'
 
 
 const Products = ({ route, navigation }) => {
@@ -12,20 +13,22 @@ const Products = ({ route, navigation }) => {
   const [text, setText] = useState('')
   const [categoryProd, setCategoryProd] = useState([])
   const { item } = route.params;
-  console.log(products)
 
   const products = useSelector((state) => state.homeSlice.allProducts)
 
+  const { data, isLoading, isError } = useGetCategoriesQuery()
+
+  const productsFilterByCategories = useSelector((state) => state.homeSlice.productsFilterByCategories);
+
   useEffect(() => {
-    const categoryProducts = products.filter((el) => el.category === item);
-    setCategoryProd(categoryProducts);
+
+    setCategoryProd(productsFilterByCategories);
 
     if (text) {
       const titleProduct = products.filter((el) => el.title.toLowerCase().startsWith(text.toLowerCase())
       );
       setCategoryProd(titleProduct);
     }
-
   }, [text, item]);
 
 
