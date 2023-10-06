@@ -40,13 +40,13 @@ const RootNavigation = () => {
                 options={{
                     ...headerOptions(''),
                     headerLeft: (props) => <LogoTitle  {...props} />,
-                    headerRight: () => (
-                        <Pressable onPress={() => {
-                            alert('Próximamente')
-                        }}>
-                            <Feather name="menu" size={24} color="black" />
-                        </Pressable>
-                    ),
+                    // headerRight: () => (
+                    //     <Pressable onPress={() => {
+                    //         alert('Próximamente')
+                    //     }}>
+                    //         <Feather name="menu" size={24} color="black" />
+                    //     </Pressable>
+                    // ),
                 }}
             />
             <Stack.Screen component={Products} name="products"

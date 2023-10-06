@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, View, TextInput } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 
-const Search = ({text, setText}) => {
+const Search = ({ text, setText }) => {
 
 
     const onHandleText = (value) => { setText(value) }
@@ -21,8 +21,8 @@ const Search = ({text, setText}) => {
                     placeholder="Buscar producto..."
                 />
 
-                <Pressable onPress={() => { console.log("Aprete") }}>
-                    <AntDesign name="close" size={24} color="black" onPress={clearText}/>
+                <Pressable>
+                    <AntDesign name="close" size={24} color="black" onPress={clearText} />
                 </Pressable>
             </View>
         </View >

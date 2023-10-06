@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { categories } from "../../data/categories";
+import { useGetProductsQuery } from "../../services/ecApi";
 import { products } from "../../data/products";
+// const { data: products, isLoading, isError } = useGetProductsQuery()
+
 
 const homeSlice = createSlice({
     name: "home",
     initialState: {
-        allCategories: categories,
         allProducts: products,
         categorySelected: "",
         productsFilterByCategories: [],

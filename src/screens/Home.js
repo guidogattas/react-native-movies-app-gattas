@@ -2,20 +2,9 @@ import { StyleSheet, Text, Image, ScrollView } from 'react-native'
 import React from 'react'
 import Categories from '../components/Categories'
 import { colors } from '../theme/colors'
-import { useSelector } from 'react-redux'
-import { useGetCategoriesQuery } from '../services/ecApi'
 
 
 const Home = ({ navigation }) => {
-
-  const {
-    data: categories,
-    isLoading,
-    isError
-  } = useGetCategoriesQuery()
-
-  console.log(categories)
-
 
 
   return (
