@@ -10,6 +10,7 @@ import { clearUser } from '../redux/slice/authSlice';
 import { Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
+import { Alert } from 'react-native';
 
 
 
@@ -23,7 +24,18 @@ const Profile = ({ navigation }) => {
     const [location, setLocation] = useState(null)
 
     const dispatch = useDispatch()
-    const handleClearUser = () => { dispatch(clearUser()) }
+
+    const onLogout = () => {
+        Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
+            {
+                text: 'No',
+                style: 'cancel',
+            },
+            { text: 'Si', onPress: () => dispatch(clearUser()) },
+        ]);
+    }
+
+
 
     const pickImage = async () => {
 
@@ -78,7 +90,6 @@ const Profile = ({ navigation }) => {
 
         let location = await Location.getCurrentPositionAsync({});
         setLocation(location);
-
         navigation.navigate('mapaLoc', { location })
 
     }
@@ -117,7 +128,7 @@ const Profile = ({ navigation }) => {
                         <Text style={styles.textPressable}>Abrir Mapa</Text>
                     </View>
                     <View style={styles.pressableLogoutContainer}>
-                        <Pressable onPress={handleClearUser} style={styles.pressableButton}>
+                        <Pressable onPress={onLogout} style={styles.pressableButton}>
                             <MaterialIcons name="logout" size={24} color="black" />
                         </Pressable>
                         <Text style={styles.textPressable}>Logout</Text>

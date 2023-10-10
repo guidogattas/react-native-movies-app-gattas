@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import MapView from 'react-native-maps';
 import Header from '../components/Header';
@@ -13,7 +13,6 @@ const MapaLoc = ({ route }) => {
             <MapView
                 pointerEvents={true}
                 showsUserLocation={true}
-                // followsUserLocation={true}
                 region={{
                     latitude: location.coords.latitude,
                     longitude: location.coords.longitude

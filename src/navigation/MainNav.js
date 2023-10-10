@@ -29,7 +29,7 @@ const MainNav = () => {
             }
         };
         fetchUserData();
-    }, [dispatch]);
+    }, []);
 
     return (
         <NavigationContainer style={styles.container} >
