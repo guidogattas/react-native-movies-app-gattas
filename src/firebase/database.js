@@ -1,1 +1,1 @@
-export const base_url = 'https://ecommerce-75695-default-rtdb.firebaseio.com/'
+export const base_url = 'https://movies-app-react-native-a4528-default-rtdb.firebaseio.com/'

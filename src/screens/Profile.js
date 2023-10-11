@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
-
 import Header from '../components/Header';
 import { usePutImageMutation, useGetImageQuery } from '../services/ecApi';
-
 import { useDispatch } from 'react-redux';
 import { clearUser } from '../redux/slice/authSlice';
-
 import { Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import { Alert } from 'react-native';
 
-
-
 const Profile = ({ navigation }) => {
-
 
     const defaultImage = "https://st2.depositphotos.com/1104517/11967/v/950/depositphotos_119675554-stock-illustration-male-avatar-profile-picture-vector.jpg";
 
@@ -26,16 +20,16 @@ const Profile = ({ navigation }) => {
     const dispatch = useDispatch()
 
     const onLogout = () => {
-        Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
-            {
-                text: 'No',
-                style: 'cancel',
-            },
-            { text: 'Si', onPress: () => dispatch(clearUser()) },
-        ]);
+        // Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
+        //     {
+        //         text: 'No',
+        //         style: 'cancel',
+        //     },
+        //     { text: 'Si', onPress: () => dispatch(clearUser()) },
+        // ]);
+        dispatch(clearUser())
+
     }
-
-
 
     const pickImage = async () => {
 
@@ -51,16 +45,12 @@ const Profile = ({ navigation }) => {
             await putImage({
                 image: `data:image/jpeg;base64,${result.assets[0].base64}`,
             });
-
             refetch();
         }
-
     };
 
     const openCamera = async () => {
-
         const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
-
         if (permissionResult.granted === false) {
             alert("No le has dado permiso a la Aplicación para acceder a tu cámara!");
             return;
@@ -79,19 +69,15 @@ const Profile = ({ navigation }) => {
             }
         }
     };
-
     const getCoords = async () => {
-
         let { status } = await Location.requestForegroundPermissionsAsync();
         if (status !== 'granted') {
             setErrorMsg('Permiso denegado');
             return;
         }
-
         let location = await Location.getCurrentPositionAsync({});
         setLocation(location);
         navigation.navigate('mapaLoc', { location })
-
     }
 
     return (
@@ -111,13 +97,13 @@ const Profile = ({ navigation }) => {
                         <Pressable style={styles.pressableButton} onPress={() => openCamera()}>
                             <Entypo name="camera" size={40} color="black" />
                         </Pressable>
-                        <Text>Abrir Cámara</Text>
+                        <Text style={styles.textPressable}>Abrir Cámara</Text>
                     </View>
                     <View style={styles.pressableContainer}>
                         <Pressable style={styles.pressableButton} onPress={() => pickImage()}>
                             <MaterialIcons name="add-photo-alternate" size={40} color="black" />
                         </Pressable>
-                        <Text>Abrir Galería de Fotos</Text>
+                        <Text style={styles.textPressable}>Abrir Galería de Fotos</Text>
                     </View>
                     <View style={styles.pressableContainer}>
                         <Pressable style={styles.pressableButton}
@@ -129,7 +115,7 @@ const Profile = ({ navigation }) => {
                     </View>
                     <View style={styles.pressableLogoutContainer}>
                         <Pressable onPress={onLogout} style={styles.pressableButton}>
-                            <MaterialIcons name="logout" size={24} color="black" />
+                            <MaterialIcons name="logout" size={30} color="black" />
                         </Pressable>
                         <Text style={styles.textPressable}>Logout</Text>
                     </View>
@@ -141,7 +127,6 @@ const Profile = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
         alignItems: 'center',
     },
     image: {
@@ -152,11 +137,14 @@ const styles = StyleSheet.create({
     },
     textPressable: {
         textAlign: 'center',
+        fontFamily: 'JosefinBold',
+        fontSize: 16,
     },
     pressableContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         marginTop: 20,
+
     },
     pressableButton: {
         marginRight: 10,

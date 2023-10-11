@@ -12,8 +12,8 @@ export const ecApi = createApi({
         getCategories: builder.query({
             query: () => 'categories.json',
         }),
-        getProducts: builder.query({
-            query: () => 'products.json',
+        getMovies: builder.query({
+            query: () => 'movies.json',
         }),
 
         //FIREBASE
@@ -30,4 +30,4 @@ export const ecApi = createApi({
     }),
 })
 
-export const { useGetCategoriesQuery, useGetProductsQuery, useGetImageQuery, usePutImageMutation } = ecApi;
+export const { useGetCategoriesQuery, useGetMoviesQuery, useGetImageQuery, usePutImageMutation } = ecApi;

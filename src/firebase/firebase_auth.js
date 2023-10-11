@@ -7,16 +7,15 @@ import { getAuth } from "firebase/auth"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDZzVVDtxFQXqeXxijRKV5ldkvLjxzTq3s",
-    authDomain: "ecommerce-75695.firebaseapp.com",
-    databaseURL: "https://ecommerce-75695-default-rtdb.firebaseio.com",
-    projectId: "ecommerce-75695",
-    storageBucket: "ecommerce-75695.appspot.com",
-    messagingSenderId: "975945357295",
-    appId: "1:975945357295:web:8e88b50f4e56ca7d0d881a"
+    apiKey: "AIzaSyAVTI30WmBenplBbXbVKbV4AYwctlZhg1o",
+    authDomain: "movies-app-react-native-a4528.firebaseapp.com",
+    projectId: "movies-app-react-native-a4528",
+    storageBucket: "movies-app-react-native-a4528.appspot.com",
+    messagingSenderId: "990312863976",
+    appId: "1:990312863976:web:fb56f021aa9b159dea515d"
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
 
+export const app = initializeApp(firebaseConfig);
 export const firebase_auth = getAuth();

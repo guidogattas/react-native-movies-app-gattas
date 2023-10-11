@@ -16,16 +16,17 @@ const styles = StyleSheet.create({
     height: 85,
     width: "100%",
     alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.lightGreen,
+    justifyContent: "flex-end",
+    backgroundColor: colors.darkGray,
   },
   headerText: {
     fontFamily: 'JosefinBold',
-    fontSize: 25,
+    fontSize: 24,
     fontWeight: "600",
-    marginTop: 30,
-    color: colors.heavyBlue,
+    color: colors.orange,
+    marginBottom: 10,
   }
+
 
 })
 

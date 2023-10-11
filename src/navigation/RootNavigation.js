@@ -4,7 +4,7 @@ import Home from '../screens/Home'
 import ProductDetail from '../screens/ProductDetail'
 import Products from '../screens/Products'
 import { colors } from '../theme/colors'
-import { Image, Pressable } from 'react-native'
+import { Image, Pressable, Text } from 'react-native'
 import { Feather } from '@expo/vector-icons';
 
 const Stack = createNativeStackNavigator()
@@ -13,25 +13,15 @@ const headerOptions = (title) => ({
     title: title,
     headerTitleAlign: 'center',
     headerStyle: {
-        backgroundColor: colors.lightGreen,
+        backgroundColor: colors.darkGray,
     },
     headerTitleStyle: {
         fontFamily: 'JosefinBold',
         fontSize: 24,
         fontWeight: "600",
-        color: colors.heavyBlue,
+        color: colors.orange,
     }
 })
-
-const LogoTitle = () => {
-    return (
-        <Image
-            style={{ width: 80, height: 60, marginBottom: 10 }}
-            source={require('../../assets/images/logo-ecommerce.png')}
-        />
-
-    )
-}
 
 const RootNavigation = () => {
     return (
@@ -39,14 +29,11 @@ const RootNavigation = () => {
             <Stack.Screen component={Home} name='home'
                 options={{
                     ...headerOptions(''),
-                    headerLeft: (props) => <LogoTitle  {...props} />,
-                    // headerRight: () => (
-                    //     <Pressable onPress={() => {
-                    //         alert('Próximamente')
-                    //     }}>
-                    //         <Feather name="menu" size={24} color="black" />
-                    //     </Pressable>
-                    // ),
+                    headerLeft: () => (
+                        <Text style={{ ...headerOptions('').headerTitleStyle, marginLeft: 10 }}>
+                            Watch Movies
+                        </Text>
+                    ),
                 }}
             />
             <Stack.Screen component={Products} name="products"

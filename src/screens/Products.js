@@ -5,7 +5,7 @@ import Search from '../components/Search'
 import ProductItem from '../components/ProductItem'
 import { colors } from '../theme/colors'
 import { useSelector } from 'react-redux'
-import { useGetCategoriesQuery, useGetProductsQuery } from '../services/ecApi'
+import { useGetCategoriesQuery, useGetMoviesQuery } from '../services/ecApi'
 
 
 const Products = ({ route, navigation }) => {
@@ -13,7 +13,7 @@ const Products = ({ route, navigation }) => {
   const [text, setText] = useState('')
   const [categoryProd, setCategoryProd] = useState([])
   const { item } = route.params;
-  const { data: products, isLoading, isError } = useGetProductsQuery()
+  const { data: products, isLoading, isError } = useGetMoviesQuery()
 
   const productsFilterByCategories = useSelector((state) => state.homeSlice.productsFilterByCategories);
 

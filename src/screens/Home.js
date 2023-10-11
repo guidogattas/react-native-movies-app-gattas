@@ -1,29 +1,23 @@
-import { StyleSheet, Text, Image, ScrollView } from 'react-native'
-import React from 'react'
-import Categories from '../components/Categories'
-import { colors } from '../theme/colors'
+import React from 'react';
+import { StyleSheet, Text, View, Image, ScrollView, ActivityIndicator } from 'react-native';
+import { colors } from '../theme/colors';
+import TrendingMovies from '../components/TrendingMovies';
 
 
-const Home = ({ navigation }) => {
+const Home = () => {
+
 
 
   return (
     <ScrollView style={styles.container}>
-      <Image
-        style={styles.image}
-        source={require('../../assets/images/costo-plataforma.jpg')}
-      />
       <Text style={styles.text}>
-        BIENVENIDOS A NUESTRO E-COMMERCE
+        BIENVENIDOS
       </Text>
-      <Categories
-        navigation={navigation}
-      />
+      <TrendingMovies />
     </ScrollView>
-  )
-}
+  );
 
-export default Home
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -38,9 +32,6 @@ const styles = StyleSheet.create({
     fontFamily: 'JosefinBold',
     fontSize: 30,
   },
-  image: {
-    height: 200,
-    width: "100%",
-    marginVertical: 40,
-  }
-})
+});
+
+export default Home;

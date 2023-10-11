@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useGetProductsQuery } from "../../services/ecApi";
+import { useGetMoviesQuery } from "../../services/ecApi";
 import { products } from "../../data/products";
 // const { data: products, isLoading, isError } = useGetProductsQuery()
 

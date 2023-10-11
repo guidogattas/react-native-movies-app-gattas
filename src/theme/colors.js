@@ -10,5 +10,11 @@ export const colors = {
     lightBlue: '#64CCC5',
     white: '#EEEEEE',
     orange: '#FF622D',
+    lightOrange: '#B4911E',
+    darkOrange: '#FF8C00',
+    black: "#000000",
+    darkGray: '#080808',
+    gray: '#808080',
+    lightBlue: '#A9A9A9',
 
 }
