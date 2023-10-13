@@ -3,9 +3,9 @@ import { Pressable, StyleSheet, View, TextInput } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 
-const Search = ({ text, setText }) => {
+const Search = () => {
 
-
+    const [text, setText] = useState('')
     const onHandleText = (value) => { setText(value) }
     const clearText = () => {
         setText('')
@@ -18,7 +18,7 @@ const Search = ({ text, setText }) => {
                     style={styles.input}
                     onChangeText={onHandleText}
                     value={text}
-                    placeholder="Buscar producto..."
+                    placeholder="Buscar película..."
                 />
 
                 <Pressable>
@@ -34,7 +34,7 @@ export default Search
 const styles = StyleSheet.create({
 
     container: {
-        backgroundColor: colors.white,
+        backgroundColor: colors.orange,
         height: 100,
         justifyContent: 'center',
 

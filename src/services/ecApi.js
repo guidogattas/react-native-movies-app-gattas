@@ -15,6 +15,15 @@ export const ecApi = createApi({
         getMovies: builder.query({
             query: () => 'movies.json',
         }),
+        getTrendingMovies: builder.query({
+            query: () => 'trendingMovies.json',
+        }),
+        getPopularMovies: builder.query({
+            query: () => 'popularMovies.json',
+        }),
+        getUpcomingMovies: builder.query({
+            query: () => 'upcomingMovies.json',
+        }),
 
         //FIREBASE
         getImage: builder.query({
@@ -30,4 +39,4 @@ export const ecApi = createApi({
     }),
 })
 
-export const { useGetCategoriesQuery, useGetMoviesQuery, useGetImageQuery, usePutImageMutation } = ecApi;
+export const { useGetCategoriesQuery, useGetPopularMoviesQuery, useGetUpcomingMoviesQuery, useGetTrendingMoviesQuery, useGetMoviesQuery, useGetImageQuery, usePutImageMutation } = ecApi;

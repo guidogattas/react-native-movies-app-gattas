@@ -2,11 +2,12 @@ import { StyleSheet, Text, TextInput, View } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { colors } from '../theme/colors'
-import { Pressable } from 'react-native'
+import { Pressable, Dimensions } from 'react-native'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { firebase_auth } from '../firebase/firebase_auth'
 import { useDispatch } from 'react-redux'
 import { setIdToken, setUser } from '../redux/slice/authSlice'
+
 
 
 const Login = ({ navigation }) => {
@@ -14,6 +15,7 @@ const Login = ({ navigation }) => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const { width, height } = Dimensions.get("window");
 
     const handleLogin = async () => {
         try {

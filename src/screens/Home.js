@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, ActivityIndicator } from 'react-native';
 import { colors } from '../theme/colors';
 import TrendingMovies from '../components/TrendingMovies';
+import PopularMovies from '../components/PopularMovies';
 
 
 const Home = () => {
@@ -14,6 +15,8 @@ const Home = () => {
         BIENVENIDOS
       </Text>
       <TrendingMovies />
+      <PopularMovies />
+
     </ScrollView>
   );
 

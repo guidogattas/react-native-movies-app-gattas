@@ -5,7 +5,7 @@ import { colors } from '../theme/colors';
 import Carousel from 'react-native-snap-carousel';
 import { useNavigation } from '@react-navigation/native';
 
-const TrendingMovies = () => {
+const PopularMovies = () => {
 
     const { data: movies, isLoading, isError } = useGetMoviesQuery();
     console.log(movies)
@@ -28,7 +28,7 @@ const TrendingMovies = () => {
                 </View>
             ) : (
                 <>
-                    <Text style={styles.title}>TENDENCIA:</Text>
+                    <Text style={styles.title}>MEJORES RANKEADAS:</Text>
                     <Carousel
                         data={movies}
                         renderItem={({ item }) => (
@@ -57,9 +57,9 @@ const TrendingMovies = () => {
             )}
         </View>
     );
-};
+}
 
-export default TrendingMovies
+export default PopularMovies
 
 const styles = StyleSheet.create({
     container: {
@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
         color: colors.black,
         fontSize: 20,
         marginBottom: 20,
+        marginTop: 20,
         left: 20,
     },
     movieTitle: {

@@ -1,20 +1,20 @@
+
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-import Header from '../components/Header'
 import { colors } from '../theme/colors'
-import Search from '../components/Search'
 
-const SearchScreen = () => {
+const SearchMovies = () => {
+
+
     return (
         <View style={styles.container}>
-            <Header title={'Búsqueda'} />
-            <Search />
+            <Text>SearchMovies</Text>
 
         </View>
     )
 }
 
-export default SearchScreen
+export default SearchMovies
 
 const styles = StyleSheet.create({
     container: {

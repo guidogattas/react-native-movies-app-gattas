@@ -5,7 +5,7 @@ import ProductDetail from '../screens/ProductDetail'
 import Products from '../screens/Products'
 import { colors } from '../theme/colors'
 import { Image, Pressable, Text } from 'react-native'
-import { Feather } from '@expo/vector-icons';
+import MovieDetail from '../screens/MovieDetail'
 
 const Stack = createNativeStackNavigator()
 
@@ -20,6 +20,7 @@ const headerOptions = (title) => ({
         fontSize: 24,
         fontWeight: "600",
         color: colors.orange,
+        // height: 25,
     }
 })
 
@@ -43,6 +44,9 @@ const RootNavigation = () => {
             />
             <Stack.Screen component={ProductDetail} name="productDetail"
                 options={{ ...headerOptions('Product Details') }}
+            />
+            <Stack.Screen component={MovieDetail} name='movieDetail'
+                options={{ ...headerOptions('Detalles') }}
             />
         </Stack.Navigator>
     )
