@@ -1,31 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useGetMoviesQuery } from "../../services/ecApi";
-import { products } from "../../data/products";
-// const { data: products, isLoading, isError } = useGetProductsQuery()
+
+
 
 
 const homeSlice = createSlice({
     name: "home",
     initialState: {
-        allProducts: products,
-        categorySelected: "",
-        productsFilterByCategories: [],
-        productSelected: {},
+        trendingMovies: [],
+        trendingSeries: [],
+        topRatedMovies: [],
+        discoverMovies: [],
+
     },
 
     reducers: {
-        setCategory: (state, action) => {
-            state.categorySelected = action.payload;
-
-            state.productsFilterByCategories = state.allProducts.filter((el) => el.category === state.categorySelected);
+        setTrendingMovies: (state, action) => {
+            state.trendingMovies = action.payload
         },
+        setTrendingSeries: (state, action) => {
 
-        setProductSelected: (state, action) => {
-            state.productSelected = action.payload;
+            state.trendingSeries = action.payload
         },
+        setTopRatedMovies: (state, action) => {
+            state.topRatedMovies = action.payload
+        },
+        setDiscoverMovies: (state, action) => {
+            state.discoverMovies = action.payload
+        }
+
     }
 })
 
-export const { setCategory, setProductSelected } = homeSlice.actions
+export const { setTrendingMovies, setTrendingSeries, setTopRatedMovies, setDiscoverMovies } = homeSlice.actions
 
 export default homeSlice.reducer;

@@ -6,8 +6,8 @@ import authSlice from "./slice/authSlice";
 export const store = configureStore({
     reducer: {
         homeSlice,
-        [ecApi.reducerPath]: ecApi.reducer,
         authSlice,
+        [ecApi.reducerPath]: ecApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(ecApi.middleware)

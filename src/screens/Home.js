@@ -2,20 +2,24 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, ActivityIndicator } from 'react-native';
 import { colors } from '../theme/colors';
 import TrendingMovies from '../components/TrendingMovies';
-import PopularMovies from '../components/PopularMovies';
+import TrendingSeries from '../components/TrendingSeries';
+import TopRatedMovies from '../components/TopRatedMovies';
+import DiscoverMovies from '../components/DiscoverMovies';
 
 
 const Home = () => {
 
-
-
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.text}>
-        BIENVENIDOS
-      </Text>
-      <TrendingMovies />
-      <PopularMovies />
+      {/* <Text style={styles.text}>
+        RECOMENDACIONES
+      </Text> */}
+      <View style={styles.containerDisplay}>
+        <TrendingMovies />
+        <TrendingSeries />
+        <TopRatedMovies />
+        <DiscoverMovies />
+      </View>
 
     </ScrollView>
   );
@@ -25,16 +29,19 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.orange,
+    backgroundColor: colors.heavyBlue,
   },
   text: {
     textAlign: 'center',
-    marginVertical: 20,
+    marginVertical: 40,
     marginHorizontal: 10,
     color: colors.white,
     fontFamily: 'JosefinBold',
-    fontSize: 30,
+    fontSize: 26,
   },
+  containerDisplay: {
+    marginBottom: 50,
+  }
 });
 
 export default Home;

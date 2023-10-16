@@ -1,60 +1,41 @@
 import React from 'react'
-import { useGetMoviesQuery } from '../services/ecApi';
-import { StyleSheet, Text, View, Image, ScrollView, ActivityIndicator, Dimensions, TouchableWithoutFeedback } from 'react-native';
-import { colors } from '../theme/colors';
-import Carousel from 'react-native-snap-carousel';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, View, ActivityIndicator, } from 'react-native';
+import { fetchTrendingMovies } from '../utils/moviesApi';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setTrendingMovies } from '../redux/slice/homeSlice';
+import ScreenList from './ScreenList';
 
 const TrendingMovies = () => {
 
-    const { data: movies, isLoading, isError } = useGetMoviesQuery();
-    console.log(movies)
-    const { width, height } = Dimensions.get("window");
-    const navigation = useNavigation();
-    const handleClick = (item) => {
-
-        navigation.navigate("movieDetail", item);
+    const trendingMovies = useSelector((state) => state.homeSlice.trendingMovies)
+    const dispatch = useDispatch()
+    const fetchTrendMovies = async () => {
+        try {
+            const trendingData = await fetchTrendingMovies();
+            const randomizedResults = trendingData.results.sort(() => Math.random() - 0.5)
+            dispatch(setTrendingMovies(randomizedResults));;
+        } catch (error) {
+            console.error('Error en TrendingMovies.js', error);
+        }
     };
+
+    useEffect(() => {
+        fetchTrendMovies();
+    }, []);
+
+
 
     return (
         <View style={styles.container}>
-            {isLoading ? (
+            {!trendingMovies ? (
                 <View>
                     <ActivityIndicator size="large" color="#00ff00" />
                 </View>
-            ) : isError ? (
-                <View>
-                    <Text>Error al cargar las películas.</Text>
-                </View>
-            ) : (
-                <>
-                    <Text style={styles.title}>TENDENCIA:</Text>
-                    <Carousel
-                        data={movies}
-                        renderItem={({ item }) => (
-                            <TouchableWithoutFeedback onPress={() => handleClick(item)}>
-                                <Image
-                                    source={{
-                                        uri: item.urlPoster,
-                                    }}
-                                    style={{
-                                        width: width * 0.8,
-                                        height: height * 0.25,
-                                    }}
-                                    resizeMode="cover"
-                                    className="rounded-3xl"
-                                />
-                            </TouchableWithoutFeedback>
-                        )}
-                        firstItem={1}
-                        inactiveSlideScale={0.86}
-                        inactiveSlideOpacity={0.6}
-                        sliderWidth={width}
-                        itemWidth={width * 0.8}
-                        slideStyle={{ display: "flex", alignItems: "center" }}
-                    />
-                </>
-            )}
+            )
+                : (
+                    <ScreenList title={'PELÍCULAS TENDENCIAS'} data={trendingMovies} />
+                )}
         </View>
     );
 };
@@ -64,22 +45,5 @@ export default TrendingMovies
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
     },
-    title: {
-        fontFamily: 'JosefinBold',
-        color: colors.black,
-        fontSize: 20,
-        marginBottom: 20,
-        left: 20,
-    },
-    movieTitle: {
-        color: colors.black,
-        fontSize: 20,
-    },
-    image: {
-        height: 200,
-        width: 150,
-        marginVertical: 10,
-    }
 });

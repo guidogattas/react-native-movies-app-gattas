@@ -1,8 +1,6 @@
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Home from '../screens/Home'
-import ProductDetail from '../screens/ProductDetail'
-import Products from '../screens/Products'
 import { colors } from '../theme/colors'
 import { Image, Pressable, Text } from 'react-native'
 import MovieDetail from '../screens/MovieDetail'
@@ -37,16 +35,8 @@ const RootNavigation = () => {
                     ),
                 }}
             />
-            <Stack.Screen component={Products} name="products"
-                options={({ route }) => ({
-                    ...headerOptions(route.params.item),
-                })}
-            />
-            <Stack.Screen component={ProductDetail} name="productDetail"
-                options={{ ...headerOptions('Product Details') }}
-            />
             <Stack.Screen component={MovieDetail} name='movieDetail'
-                options={{ ...headerOptions('Detalles') }}
+                options={{ ...headerOptions('Detalles'), headerTintColor: colors.orange }}
             />
         </Stack.Navigator>
     )

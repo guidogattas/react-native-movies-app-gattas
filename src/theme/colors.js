@@ -5,7 +5,7 @@ export const colors = {
     lime: '#E3FFC4',
     rose: '#FEE2D6',
     violet: '#C6A8C2',
-    heavyBlue: '#053B50',
+    heavyBlue: '#060c17',
     mediumBlue: '#176B87',
     lightBlue: '#64CCC5',
     white: '#EEEEEE',

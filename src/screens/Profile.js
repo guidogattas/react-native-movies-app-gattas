@@ -8,6 +8,7 @@ import { Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import { Alert } from 'react-native';
+import { colors } from '../theme/colors';
 
 const Profile = ({ navigation }) => {
 
@@ -18,21 +19,17 @@ const Profile = ({ navigation }) => {
     const [location, setLocation] = useState(null)
 
     const dispatch = useDispatch()
-
     const onLogout = () => {
-        // Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
-        //     {
-        //         text: 'No',
-        //         style: 'cancel',
-        //     },
-        //     { text: 'Si', onPress: () => dispatch(clearUser()) },
-        // ]);
-        dispatch(clearUser())
-
+        Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
+            {
+                text: 'No',
+                style: 'cancel',
+            },
+            { text: 'Si', onPress: () => dispatch(clearUser()) },
+        ]);
     }
 
     const pickImage = async () => {
-
         const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
@@ -93,31 +90,33 @@ const Profile = ({ navigation }) => {
                             source={{ uri: data ? data.image : defaultImage }}
                         />
                     </View>
-                    <View style={styles.pressableContainer}>
-                        <Pressable style={styles.pressableButton} onPress={() => openCamera()}>
-                            <Entypo name="camera" size={40} color="black" />
-                        </Pressable>
-                        <Text style={styles.textPressable}>Abrir Cámara</Text>
-                    </View>
-                    <View style={styles.pressableContainer}>
-                        <Pressable style={styles.pressableButton} onPress={() => pickImage()}>
-                            <MaterialIcons name="add-photo-alternate" size={40} color="black" />
-                        </Pressable>
-                        <Text style={styles.textPressable}>Abrir Galería de Fotos</Text>
-                    </View>
-                    <View style={styles.pressableContainer}>
-                        <Pressable style={styles.pressableButton}
-                            onPress={() => getCoords()}
-                        >
-                            <Feather name="map-pin" size={40} color="black" />
-                        </Pressable>
-                        <Text style={styles.textPressable}>Abrir Mapa</Text>
-                    </View>
-                    <View style={styles.pressableLogoutContainer}>
-                        <Pressable onPress={onLogout} style={styles.pressableButton}>
-                            <MaterialIcons name="logout" size={30} color="black" />
-                        </Pressable>
-                        <Text style={styles.textPressable}>Logout</Text>
+                    <View style={styles.pressablesContainer}>
+                        <View style={styles.pressableContainer}>
+                            <Pressable style={styles.pressableButton} onPress={() => openCamera()}>
+                                <Entypo name="camera" size={40} color={colors.orange} />
+                            </Pressable>
+                            <Text style={styles.textPressable}>Abrir Cámara</Text>
+                        </View>
+                        <View style={styles.pressableContainer}>
+                            <Pressable style={styles.pressableButton} onPress={() => pickImage()}>
+                                <MaterialIcons name="add-photo-alternate" size={40} color={colors.orange} />
+                            </Pressable>
+                            <Text style={styles.textPressable}>Abrir Galería de Fotos</Text>
+                        </View>
+                        <View style={styles.pressableContainer}>
+                            <Pressable style={styles.pressableButton}
+                                onPress={() => getCoords()}
+                            >
+                                <Feather name="map-pin" size={40} color={colors.orange} />
+                            </Pressable>
+                            <Text style={styles.textPressable}>Abrir Mapa</Text>
+                        </View>
+                        <View style={styles.pressableLogoutContainer}>
+                            <Pressable onPress={onLogout} style={styles.pressableButton}>
+                                <MaterialIcons name="logout" size={30} color={colors.orange} />
+                            </Pressable>
+                            <Text style={styles.textPressable}>LOGOUT</Text>
+                        </View>
                     </View>
                 </>
             }
@@ -128,6 +127,8 @@ const Profile = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
+        backgroundColor: colors.heavyBlue,
+        flex: 1
     },
     image: {
         marginTop: 20,
@@ -139,11 +140,13 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'JosefinBold',
         fontSize: 16,
+        color: colors.white
     },
     pressableContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 20,
+        marginVertical: 20,
+        flexDirection: "row",
+        alignItems: "center",
+
 
     },
     pressableButton: {
@@ -151,8 +154,10 @@ const styles = StyleSheet.create({
     },
     pressableLogoutContainer: {
         flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 100
+        marginTop: 100,
+        marginLeft: 10,
+
+
     }
 });
 
