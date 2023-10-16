@@ -42,7 +42,6 @@ const TabNav = () => {
                             style={focused ? styles.image : styles.imageNotFocused}
                             source={{ uri: data ? data.image : defaultImage }}
                         />
-                    // <Ionicons name="person-circle-outline" size={focused ? 36 : 30} color={focused ? colors.lightBlue : colors.heavyBlue} />
                 }}
             />
         </Tab.Navigator>

@@ -5,8 +5,11 @@ import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setTrendingMovies } from '../redux/slice/homeSlice';
 import ScreenList from './ScreenList';
+import { useState } from 'react';
 
 const TrendingMovies = () => {
+
+    const [loading, setLoading] = useState(true)
 
     const trendingMovies = useSelector((state) => state.homeSlice.trendingMovies)
     const dispatch = useDispatch()
@@ -14,7 +17,8 @@ const TrendingMovies = () => {
         try {
             const trendingData = await fetchTrendingMovies();
             const randomizedResults = trendingData.results.sort(() => Math.random() - 0.5)
-            dispatch(setTrendingMovies(randomizedResults));;
+            dispatch(setTrendingMovies(randomizedResults));
+            setLoading(false)
         } catch (error) {
             console.error('Error en TrendingMovies.js', error);
         }
@@ -28,7 +32,7 @@ const TrendingMovies = () => {
 
     return (
         <View style={styles.container}>
-            {!trendingMovies ? (
+            {loading ? (
                 <View>
                     <ActivityIndicator size="large" color="#00ff00" />
                 </View>

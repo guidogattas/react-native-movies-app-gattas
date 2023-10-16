@@ -62,7 +62,7 @@ const ScreenList = ({ title, data }) => {
                         sliderWidth={width}
                         itemWidth={width * 0.8}
                         slideStyle={{ display: "flex", alignItems: "center" }}
-                        borderRadius={50}
+                        borderRadius={0}
                     />
                 </>
             )}

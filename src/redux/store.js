@@ -1,7 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 import homeSlice from "./slice/homeSlice";
-import { ecApi } from "../services/ecApi";
 import authSlice from "./slice/authSlice";
+import { ecApi } from "../services/ecApi";
+
 
 export const store = configureStore({
     reducer: {

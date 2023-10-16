@@ -5,8 +5,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react';
 import ScreenList from './ScreenList';
 import { setDiscoverMovies } from '../redux/slice/homeSlice';
+import { useState } from 'react';
 
 const DiscoverMovies = () => {
+
+    const [loading, setLoading] = useState(true)
 
     const discoveredMovies = useSelector((state) => state.homeSlice.discoverMovies)
     const dispatch = useDispatch()
@@ -16,6 +19,7 @@ const DiscoverMovies = () => {
             const discoverData = await fetchDiscoverMovies()
             const randomizedResults = discoverData.results.sort(() => Math.random() - 0.5)
             dispatch(setDiscoverMovies(randomizedResults))
+            setLoading(false)
         } catch (error) {
             console.error('Error en DiscoverMovies.js ', error)
         }
@@ -29,7 +33,7 @@ const DiscoverMovies = () => {
 
     return (
         <View style={styles.container}>
-            {!discoveredMovies ? (
+            {loading ? (
                 <View>
                     <ActivityIndicator size="large" color="#00ff00" />
                 </View>

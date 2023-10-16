@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { apiKeyAuth, accessTokenAuth } from "./apiKey";
 
 const options = {
@@ -79,28 +78,6 @@ export const fetchDiscoverMovies = () => {
         });
 }
 
-
-// OBTENEMOS LOS DATOS DE LOS GÉNEROS:
-export const GenreList = () => {
-    const [movieGenres, setMovieGenres] = useState([]);
-    const [tvGenres, setTvGenres] = useState([]);
-
-    useEffect(() => {
-
-
-        fetch('https://api.themoviedb.org/3/genre/movie/list?language=es', options)
-            .then(response => response.json())
-            .then(response => setMovieGenres(response.genres))
-            .catch(err => console.error(err));
-
-        fetch('https://api.themoviedb.org/3/genre/tv/list?language=en', options)
-            .then(response => response.json())
-            .then(response => console.log(response))
-            .catch(err => console.error(err));
-
-    }, []);
-    return { movieGenres, tvGenres }
-}
 
 
 

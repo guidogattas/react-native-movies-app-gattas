@@ -5,11 +5,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setTrendingSeries } from '../redux/slice/homeSlice';
 import { fetchTrendingSeries } from '../utils/moviesApi';
 import ScreenList from './ScreenList';
+import { useState } from 'react';
 
 
 
 
 const TrendingSeries = () => {
+
+    const [loading, setLoading] = useState(true)
 
     const trendingSeries = useSelector((state) => state.homeSlice.trendingSeries)
     const dispatch = useDispatch()
@@ -19,6 +22,7 @@ const TrendingSeries = () => {
             const trendingData = await fetchTrendingSeries();
             const randomizedResults = trendingData.results.sort(() => Math.random() - 0.5)
             dispatch(setTrendingSeries(randomizedResults));
+            setLoading(false)
         } catch (error) {
             console.error(`Error en TrendingSeries.js ${error}`);
         }
@@ -33,7 +37,7 @@ const TrendingSeries = () => {
 
     return (
         <View style={styles.container}>
-            {!trendingSeries ? (
+            {loading ? (
                 <View>
                     <ActivityIndicator size="large" color="#00ff00" />
                 </View>
