@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.heavyBlue
-    }
+    },
+
 });
 
 export default SearchScreen;

@@ -9,7 +9,7 @@ const options = {
 };
 
 export const fetchTrendingMovies = () => {
-    return fetch('https://api.themoviedb.org/3/trending/movie/day?language=es-ES', options)
+    return fetch('https://api.themoviedb.org/3/trending/movie/day?language=es-AR', options)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error en moviesApi.js Status: ${response.status}`);
@@ -26,7 +26,7 @@ export const fetchTrendingMovies = () => {
 }
 
 export const fetchTrendingSeries = () => {
-    return fetch('https://api.themoviedb.org/3/trending/tv/day?language=es-ES', options)
+    return fetch('https://api.themoviedb.org/3/trending/tv/day?language=es-AR', options)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error en moviesApi.js Status: ${response.status}`);
@@ -46,7 +46,7 @@ export const fetchTrendingSeries = () => {
 
 export const fetchTopRatedMovies = () => {
     const randomNumber = Math.floor(Math.random() * 20)
-    return fetch(`https://api.themoviedb.org/3/movie/top_rated?language=es-ES&page=${randomNumber}`, options)
+    return fetch(`https://api.themoviedb.org/3/movie/top_rated?language=es-AR&page=${randomNumber}`, options)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error en moviesApi.js Status: ${response.status}`);
@@ -63,7 +63,7 @@ export const fetchTopRatedMovies = () => {
 
 
 export const fetchDiscoverMovies = () => {
-    return fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=es-ES&page=1&sort_by=popularity.desc', options)
+    return fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=es-AR&page=1&sort_by=popularity.desc', options)
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Error en moviesApi.js Status: ${response.status}`);

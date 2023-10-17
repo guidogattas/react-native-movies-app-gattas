@@ -40,7 +40,9 @@ const ScreenList = ({ title, data }) => {
                                 <View>
                                     <Image
                                         source={{
-                                            uri: `https://image.tmdb.org/t/p/original/${item.poster_path}`,
+                                            uri: item.poster_path !== null
+                                                ? `https://image.tmdb.org/t/p/original/${item.poster_path}`
+                                                : 'https://i.ibb.co/WKtwrKQ/404-Poster-Not-Found-v2.jpg',
                                         }}
                                         style={{
                                             width: width * 0.8,

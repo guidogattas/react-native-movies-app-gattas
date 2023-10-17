@@ -8,6 +8,7 @@ import { AntDesign } from '@expo/vector-icons';
 
 
 
+
 const MovieDetail = ({ route }) => {
 
     const [isFavorite, setIsFavorite] = useState(false)
@@ -20,10 +21,12 @@ const MovieDetail = ({ route }) => {
             <View style={styles.favoriteContainer}>
                 <Image
                     source={{
-                        uri: `https://image.tmdb.org/t/p/original/${poster_path}`,
+                        uri: poster_path !== null
+                            ? `https://image.tmdb.org/t/p/original/${poster_path}`
+                            : 'https://i.ibb.co/WKtwrKQ/404-Poster-Not-Found-v2.jpg',
                     }}
                     style={{
-                        width: 300,
+                        width: 320,
                         height: 400,
 
                     }}
@@ -31,13 +34,13 @@ const MovieDetail = ({ route }) => {
                 />
                 <View style={styles.favorite}>
                     {isFavorite ? (
-                        <AntDesign name="heart" size={50} color="red" onPress={() => setIsFavorite(false)} />
+                        <AntDesign name="heart" size={36} color="red" onPress={() => setIsFavorite(false)} />
                     ) : (
-                        <AntDesign name="hearto" size={50} color="red" onPress={() => setIsFavorite(true)} />
+                        <AntDesign name="hearto" size={36} color="red" onPress={() => setIsFavorite(true)} />
                     )}
                 </View>
             </View>
-            <Text style={{ fontFamily: 'JosefinBold', fontSize: 20, marginVertical: 10 }}>PUNTAJE: ⭐{vote_average.toFixed(2)}</Text>
+            <Text style={{ fontFamily: 'JosefinBold', fontSize: 20, marginVertical: 10 }}>PUNTAJE: ⭐{vote_average > 0 ? vote_average.toFixed(2) : 'Sin Calificación'}</Text>
             <Text style={styles.overview}>{overview}</Text>
 
 
@@ -55,7 +58,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontFamily: 'JosefinBold',
-        marginBottom: 20,
+        marginVertical: 20,
         fontSize: 40,
     },
     favoriteContainer: {

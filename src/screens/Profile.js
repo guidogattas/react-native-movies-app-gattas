@@ -20,13 +20,15 @@ const Profile = ({ navigation }) => {
 
     const dispatch = useDispatch()
     const onLogout = () => {
-        Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
-            {
-                text: 'No',
-                style: 'cancel',
-            },
-            { text: 'Si', onPress: () => dispatch(clearUser()) },
-        ]);
+        // Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
+        //     {
+        //         text: 'No',
+        //         style: 'cancel',
+        //     },
+        //     { text: 'Si', onPress: () => dispatch(clearUser()) },
+        // ]);
+
+        dispatch(clearUser())
     }
 
     const pickImage = async () => {

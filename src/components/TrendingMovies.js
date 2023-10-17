@@ -38,7 +38,7 @@ const TrendingMovies = () => {
                 </View>
             )
                 : (
-                    <ScreenList title={'PELÍCULAS TENDENCIAS'} data={trendingMovies} />
+                    <ScreenList title={'PELÍCULAS TENDENCIA'} data={trendingMovies} />
                 )}
         </View>
     );
