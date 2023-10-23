@@ -11,13 +11,13 @@ const headerOptions = (title) => ({
     title: title,
     headerTitleAlign: 'center',
     headerStyle: {
-        backgroundColor: colors.darkGray,
+        backgroundColor: colors.headerNavigationBackground,
     },
     headerTitleStyle: {
         fontFamily: 'JosefinBold',
         fontSize: 24,
         fontWeight: "600",
-        color: colors.orange,
+        color: colors.headerNavigationFont,
         // height: 25,
     }
 })
@@ -36,7 +36,7 @@ const RootNavigation = () => {
                 }}
             />
             <Stack.Screen component={MovieDetail} name='movieDetail'
-                options={{ ...headerOptions('Detalles'), headerTintColor: colors.orange }}
+                options={{ ...headerOptions('Detalles'), headerTintColor: colors.headerNavigationFont }}
             />
         </Stack.Navigator>
     )

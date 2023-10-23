@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "flex-end",
-    backgroundColor: colors.darkGray,
+    backgroundColor: colors.headerNavigationBackground,
   },
   headerText: {
     fontFamily: 'JosefinBold',
     fontSize: 24,
     fontWeight: "600",
-    color: colors.orange,
+    color: colors.headerNavigationFont,
     marginBottom: 10,
   }
 

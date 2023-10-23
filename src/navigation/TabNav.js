@@ -5,9 +5,9 @@ import RootNavigation from './RootNavigation';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 import ProfileNav from './ProfileNav';
-import SearchScreen from '../screens/SearchScreen';
 import { useGetImageQuery } from '../services/ecApi';
 import { Image } from 'react-native';
+import SearchNav from './SearchNav';
 
 
 
@@ -17,23 +17,31 @@ import { Image } from 'react-native';
 
 const TabNav = () => {
 
+    // Imágen por defecto si no hay una imágen cargada en la base de datos.
     const defaultImage = "https://st2.depositphotos.com/1104517/11967/v/950/depositphotos_119675554-stock-illustration-male-avatar-profile-picture-vector.jpg";
+
+    // Data de imágen traída de ecApi.js del builder.query image.json desde Firebase
+    const { data } = useGetImageQuery();
+
     const Tab = createBottomTabNavigator();
-    const { data, isLoading, isError, error, refetch } = useGetImageQuery();
 
     return (
         <Tab.Navigator screenOptions={{
             title: "",
             headerShown: false,
-            tabBarStyle: { height: 60, width: 'auto', backgroundColor: colors.darkGray }
+            tabBarStyle: { height: 60, width: 'auto', backgroundColor: colors.tabNavBackground }
         }}>
             <Tab.Screen name='rootNavigation' component={RootNavigation}
                 options={{
-                    tabBarIcon: ({ focused }) => <MaterialIcons name="video-library" size={focused ? 30 : 26} color={focused ? colors.orange : colors.lightOrange} />
+                    tabBarIcon: ({ focused }) =>
+                        <MaterialIcons name="video-library" size={focused ? 30 : 26} color={focused ? colors.tabNavButtonFocused : colors.tabNavButtonNotFocused} />
                 }}
             />
-            <Tab.Screen name='searchScreen' component={SearchScreen}
-                options={{ tabBarIcon: ({ focused }) => < FontAwesome name="search" size={focused ? 30 : 26} color={focused ? colors.orange : colors.lightOrange} /> }}
+            <Tab.Screen name='searchNav' component={SearchNav}
+                options={{
+                    tabBarIcon: ({ focused }) =>
+                        < FontAwesome name="search" size={focused ? 30 : 26} color={focused ? colors.tabNavButtonFocused : colors.tabNavButtonNotFocused} />
+                }}
             />
             <Tab.Screen name='profileNav' component={ProfileNav}
                 options={{
@@ -53,9 +61,7 @@ const styles = StyleSheet.create({
         height: 30,
         width: 26,
         borderRadius: 100,
-        borderColor: colors.orange,
-        // borderBottomColor: colors.orange,
-        // textShadowColor: colors.orange,
+        borderColor: colors.tabNavButtonFocused,
     },
     imageNotFocused: {
         height: 26,

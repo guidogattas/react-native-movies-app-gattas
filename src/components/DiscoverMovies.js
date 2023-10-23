@@ -1,4 +1,4 @@
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
 import React from 'react'
 import { fetchDiscoverMovies } from '../utils/moviesApi'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,6 +6,8 @@ import { useEffect } from 'react';
 import ScreenList from './ScreenList';
 import { setDiscoverMovies } from '../redux/slice/homeSlice';
 import { useState } from 'react';
+import { ActivityIndicator } from 'react-native';
+import { colors } from '../theme/colors';
 
 const DiscoverMovies = () => {
 
@@ -13,6 +15,11 @@ const DiscoverMovies = () => {
 
     const discoveredMovies = useSelector((state) => state.homeSlice.discoverMovies)
     const dispatch = useDispatch()
+
+    /**
+    * Función asincrónica para obtener y mostrar los datos de la API. Le pasamos un valor variable, para que no los ordene siempre en el mismo órden, y si actualizamos las muestre diferente.
+    * Luego la data que recibimos la pasamos por dispatch al estado de setDiscoverMovies.
+    */
 
     const fetchDiscMovies = async () => {
         try {
@@ -25,6 +32,7 @@ const DiscoverMovies = () => {
         }
     }
 
+    // Llama a la función de obtención de datos cuando se monta el componente
 
     useEffect(() => {
         fetchDiscMovies()
@@ -35,7 +43,7 @@ const DiscoverMovies = () => {
         <View style={styles.container}>
             {loading ? (
                 <View>
-                    <ActivityIndicator size="large" color="#00ff00" />
+                    <ActivityIndicator size="large" color={colors.activityIndicator} />
                 </View>
             )
                 : (

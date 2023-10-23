@@ -14,12 +14,10 @@ const ProfileNav = () => {
             initialRouteName='profile'
             screenOptions={{ headerShown: false }}
         >
-            <Stack.Screen name="profile" component={Profile} />
-            <Stack.Screen name="mapaLoc" component={MapaLoc} />
+            <Stack.Screen component={Profile} name="profile" />
+            <Stack.Screen component={MapaLoc} name="mapaLoc" />
         </Stack.Navigator>
     )
 }
-
-const styles = StyleSheet.create({})
 
 export default ProfileNav

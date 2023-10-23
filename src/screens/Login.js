@@ -2,7 +2,7 @@ import { StyleSheet, Text, TextInput, View } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { colors } from '../theme/colors'
-import { Pressable, Dimensions } from 'react-native'
+import { Pressable } from 'react-native'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { firebase_auth } from '../firebase/firebase_auth'
 import { useDispatch } from 'react-redux'
@@ -15,7 +15,12 @@ const Login = ({ navigation }) => {
     const dispatch = useDispatch()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { width, height } = Dimensions.get("window");
+
+
+    /**
+     * Función asíncrona para loguearnos, esperamos la respuesta de Firebase, pasándo el auth, email y pass
+     * Pasamos por dispatch el estado del usuario y el idToken al authSlice.js
+    */
 
     const handleLogin = async () => {
         try {
@@ -67,14 +72,16 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: "center",
+        backgroundColor: colors.backgroundColor
     },
     header: {
         fontFamily: 'JosefinBold',
         fontSize: 36,
         marginBottom: 20,
+        color: colors.headerNavigationFont
     },
     loginButton: {
-        backgroundColor: colors.lightGreen,
+        backgroundColor: colors.loginBackgroundButton,
         padding: 20,
         marginTop: 20,
         borderRadius: 20,
@@ -89,12 +96,13 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontFamily: 'JosefinRegular',
         fontSize: 14,
-        borderColor: colors.heavyBlue,
         padding: 10,
+        color: colors.textinput
     },
     textRegisterButton: {
         marginTop: 20,
         fontFamily: 'JosefinRegular',
         fontSize: 14,
+        color: colors.textinput
     }
 })

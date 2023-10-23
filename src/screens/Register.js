@@ -5,13 +5,17 @@ import { colors } from '../theme/colors'
 
 import { firebase_auth } from '../firebase/firebase_auth'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { useAddUserMutation } from '../services/ecApi'
+
 
 
 const Register = ({ navigation }) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [addUser] = useAddUserMutation()
 
+    // FUNCIÓN ASÍNCRONA QUE MANEJA EL REGISTRO DE CREACIÓN DE USUARIO CON EMAIL Y PASSWORD. Vamos a pasar los datos a Realtime Database.
     const handleRegister = async () => {
         try {
 
@@ -20,6 +24,13 @@ const Register = ({ navigation }) => {
                 email,
                 password
             )
+            const user = response.user;
+
+            console.log(user)
+
+            await addUser(user);
+
+
             navigation.navigate('login')
         } catch (error) {
             console.error('Error en registro: ', error)
@@ -34,7 +45,7 @@ const Register = ({ navigation }) => {
                 placeholderTextColor={colors.lightPurple}
                 value={email}
                 onChangeText={(value) => setEmail(value)}
-                style={styles.textInput}
+                style={[styles.textInput]}
             />
             <TextInput
                 placeholder='Contraseña'
@@ -61,21 +72,24 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: "center",
+        backgroundColor: colors.backgroundColor
     },
     header: {
         fontFamily: 'JosefinBold',
         fontSize: 36,
         marginBottom: 20,
+        color: colors.headerNavigationFont
     },
     textInput: {
         marginBottom: 10,
         fontFamily: 'JosefinRegular',
         fontSize: 14,
-        borderColor: colors.heavyBlue,
+        borderColor: colors.backgroundColor,
         padding: 10,
+        color: colors.white
     },
     registerButton: {
-        backgroundColor: colors.lightGreen,
+        backgroundColor: colors.lightPurple,
         padding: 20,
         marginTop: 20,
         borderRadius: 20,
@@ -85,7 +99,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
     },
     loginButton: {
-        backgroundColor: colors.lightPurple,
+        backgroundColor: colors.loginBackgroundButton,
         padding: 20,
         marginTop: 40,
         borderRadius: 20,

@@ -1,5 +1,4 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet } from 'react-native';
 import { useFonts } from 'expo-font';
 import { Provider } from 'react-redux';
 import { store } from './src/redux/store';
@@ -24,6 +23,3 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-
-});

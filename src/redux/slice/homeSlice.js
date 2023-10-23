@@ -16,7 +16,6 @@ const homeSlice = createSlice({
             state.trendingMovies = action.payload
         },
         setTrendingSeries: (state, action) => {
-
             state.trendingSeries = action.payload
         },
         setTopRatedMovies: (state, action) => {

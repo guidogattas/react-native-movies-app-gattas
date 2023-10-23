@@ -14,21 +14,28 @@ const Profile = ({ navigation }) => {
 
     const defaultImage = "https://st2.depositphotos.com/1104517/11967/v/950/depositphotos_119675554-stock-illustration-male-avatar-profile-picture-vector.jpg";
 
+
+    // Traemos del ecApi la función de Redux Toolkit Query para agregar o modificar la imágen de Firebase.
     const [putImage, result] = usePutImageMutation()
-    const { data, isLoading, isError, error, refetch } = useGetImageQuery();
+
+    // Con data, obtenemos los datos recuperados de Firebase, en el caso que exista (sino nos devuelve la defaultImage), y con refetch va a actualizar la imágen nueva que le pasamos a la imágen de Firebase
+    const { data, isLoading, refetch } = useGetImageQuery();
+
     const [location, setLocation] = useState(null)
 
     const dispatch = useDispatch()
-    const onLogout = () => {
-        // Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
-        //     {
-        //         text: 'No',
-        //         style: 'cancel',
-        //     },
-        //     { text: 'Si', onPress: () => dispatch(clearUser()) },
-        // ]);
 
-        dispatch(clearUser())
+    // Función para cerrar la sesión del usuario, primero le solicitamos la confirmación por Alert, en el caso que acepte va a ejecutar la función traída de Redux y va a pasar el estado del user y el idToken a null, así como también nos va a remover los datos del storage, por lo que va a volver a la pantalla de Authentication.
+
+    const onLogout = () => {
+        Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
+            {
+                text: 'No',
+                style: 'cancel',
+            },
+            { text: 'Si', onPress: () => dispatch(clearUser()) },
+        ]);
+
     }
 
     const pickImage = async () => {
@@ -95,13 +102,13 @@ const Profile = ({ navigation }) => {
                     <View style={styles.pressablesContainer}>
                         <View style={styles.pressableContainer}>
                             <Pressable style={styles.pressableButton} onPress={() => openCamera()}>
-                                <Entypo name="camera" size={40} color={colors.orange} />
+                                <Entypo name="camera" size={40} color={colors.profileButton} />
                             </Pressable>
                             <Text style={styles.textPressable}>Abrir Cámara</Text>
                         </View>
                         <View style={styles.pressableContainer}>
                             <Pressable style={styles.pressableButton} onPress={() => pickImage()}>
-                                <MaterialIcons name="add-photo-alternate" size={40} color={colors.orange} />
+                                <MaterialIcons name="add-photo-alternate" size={40} color={colors.profileButton} />
                             </Pressable>
                             <Text style={styles.textPressable}>Abrir Galería de Fotos</Text>
                         </View>
@@ -109,13 +116,13 @@ const Profile = ({ navigation }) => {
                             <Pressable style={styles.pressableButton}
                                 onPress={() => getCoords()}
                             >
-                                <Feather name="map-pin" size={40} color={colors.orange} />
+                                <Feather name="map-pin" size={40} color={colors.profileButton} />
                             </Pressable>
                             <Text style={styles.textPressable}>Abrir Mapa</Text>
                         </View>
                         <View style={styles.pressableLogoutContainer}>
                             <Pressable onPress={onLogout} style={styles.pressableButton}>
-                                <MaterialIcons name="logout" size={30} color={colors.orange} />
+                                <MaterialIcons name="logout" size={30} color={colors.profileButton} />
                             </Pressable>
                             <Text style={styles.textPressable}>LOGOUT</Text>
                         </View>
@@ -129,7 +136,7 @@ const Profile = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        backgroundColor: colors.heavyBlue,
+        backgroundColor: colors.backgroundColor,
         flex: 1
     },
     image: {
@@ -142,24 +149,20 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'JosefinBold',
         fontSize: 16,
-        color: colors.white
+        color: colors.profileText,
     },
     pressableContainer: {
         marginVertical: 20,
         flexDirection: "row",
         alignItems: "center",
-
-
     },
     pressableButton: {
         marginRight: 10,
     },
     pressableLogoutContainer: {
         flexDirection: 'row',
-        marginTop: 100,
+        marginTop: 80,
         marginLeft: 10,
-
-
     }
 });
 

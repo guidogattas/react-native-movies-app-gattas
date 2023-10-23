@@ -1,5 +1,7 @@
 import { apiKeyAuth, accessTokenAuth } from "./apiKey";
 
+// Opciones para las solicitudes HTTPS
+
 const options = {
     method: 'GET',
     headers: {
@@ -7,6 +9,11 @@ const options = {
         Authorization: `Bearer ${accessTokenAuth}`
     }
 };
+
+
+/**
+ * Exportamos las funciones de fetching de datos de la API de TMDB, con los diferentes endpoints. Luego las vamos a tener que importar en cada uno de los componentes donde vamos a necesitar utilizar los datos recibidos de la API.
+ */
 
 export const fetchTrendingMovies = () => {
     return fetch('https://api.themoviedb.org/3/trending/movie/day?language=es-AR', options)
@@ -81,5 +88,3 @@ export const fetchDiscoverMovies = () => {
 
 
 
-// PARA TRAER POR GÉNERO, CAMBIAR LOS NÚMEROS FINALES.
-// https://api.themoviedb.org/3/discover/movie?api_key={apiKeyAuth}&language=en-US&sort_by=release_date.desc&page=1&with_genres=35,53,27
