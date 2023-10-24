@@ -85,6 +85,21 @@ export const fetchDiscoverMovies = () => {
         });
 }
 
+export const fetchFavoritesMovies = (id) => {
+    return fetch(`https://api.themoviedb.org/3/movie/${id}/favorite?api_key=${apiKeyAuth}`, options)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error en moviesApi.js Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            return data;
+        })
+        .catch(err => {
+            console.error(err);
+        });
 
+}
 
 

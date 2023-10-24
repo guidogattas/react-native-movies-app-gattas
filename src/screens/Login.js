@@ -6,7 +6,7 @@ import { Pressable } from 'react-native'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { firebase_auth } from '../firebase/firebase_auth'
 import { useDispatch } from 'react-redux'
-import { setIdToken, setUser } from '../redux/slice/authSlice'
+import { setIdToken, setUser, setUid } from '../redux/slice/authSlice'
 
 
 
@@ -19,15 +19,15 @@ const Login = ({ navigation }) => {
 
     /**
      * Función asíncrona para loguearnos, esperamos la respuesta de Firebase, pasándo el auth, email y pass
-     * Pasamos por dispatch el estado del usuario y el idToken al authSlice.js
+     * Pasamos por dispatch el estado del usuario, el idToken y el uid al authSlice.js
     */
 
     const handleLogin = async () => {
         try {
             const response = await signInWithEmailAndPassword(firebase_auth, email, password)
-
             dispatch(setUser(response.user.email));
-            dispatch(setIdToken(response._tokenResponse.idToken))
+            dispatch(setIdToken(response._tokenResponse.idToken));
+            dispatch(setUid(response.user.uid));
 
         } catch (error) {
             console.error("Error en screens/Login.js: ", error)

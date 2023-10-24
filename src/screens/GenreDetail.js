@@ -27,7 +27,7 @@ const GenreDetail = ({ route }) => {
 
     const performSearch = async () => {
         try {
-            const randomNumber = Math.floor(Math.random() * 10)
+            const randomNumber = Math.floor(Math.random() * 10) + 1 // Ponemos + 1 para evitar salga la page 0 que no existe.
             const response = await fetch(
                 `https://api.themoviedb.org/3/discover/movie?api_key=${apiKeyAuth}&language=es-AR&sort_by=popularity.desc&year=2023&page=${randomNumber}&with_genres=${id}`,
                 options

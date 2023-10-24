@@ -1,50 +1,85 @@
-import { StyleSheet, Text, ScrollView, View } from 'react-native'
-import React, { useState } from 'react'
-import { Image } from 'react-native'
-import { colors } from '../theme/colors'
+import React, { useState, useEffect } from 'react';
+import { ScrollView, View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
+import { getDatabase, ref, set, get } from 'firebase/database';
+import { colors } from '../theme/colors';
+import { useSelector } from 'react-redux';
 
-
-
-// TRAEMOS LOS GÉNEROS Y LOS COMPARAMOS CON LOS QUE TRAEMOS POR PARAMS:
-
+// TRAEMOS LOS GÉNEROS Y LOS COMPARAMOS CON LOS QUE TRAEMOS POR PARAMS PARA MOSTRAR LOS GÉNEROS DE LA PELÍCULA:
 const genres = require('../data/genres.json');
 const getGenreNames = (genreIds) => {
     const genreNames = genreIds.map((genreId) => {
         const genre = genres.find((g) => g.id === genreId);
-        return genre ? genre.name : "Desconocido";
+        return genre ? genre.name : 'Desconocido';
     });
-    return genreNames.join(", ");
+    return genreNames.join(', ');
 };
 
 const MovieDetail = ({ route }) => {
-    const [isFavorite, setIsFavorite] = useState(false)
-    const { name, title, poster_path, overview, vote_average, genre_ids } = route.params
+    const database = getDatabase();
+    const uid = useSelector((state) => state.authSlice.uid);
+    console.log(uid)
+
+
+
+    const [isFavorite, setIsFavorite] = useState(false);
+    const { name, title, poster_path, overview, vote_average, genre_ids, id } = route.params;
+
+    // Función para obtener el estado actual de favorito desde la base de datos
+    const fetchFavoriteStatus = async () => {
+        const userFavoriteRef = ref(database, `users/${uid}/favorites/${id}`);
+        try {
+            const snapshot = await get(userFavoriteRef);
+            setIsFavorite(snapshot.exists());
+        } catch (error) {
+            console.error('Error al obtener el estado de favorito:', error);
+        }
+    };
+
+    // Cargar el estado de favorito al cargar la pantalla
+    useEffect(() => {
+        fetchFavoriteStatus();
+    }, []);
+
+    const toggleFavorite = async () => {
+        const userFavoriteRef = ref(database, `users/${uid}/favorites/${id}`);
+        try {
+            if (isFavorite) {
+                await set(userFavoriteRef, null);
+            } else {
+                await set(userFavoriteRef, id);
+            }
+            setIsFavorite(!isFavorite);
+        } catch (error) {
+            console.error('Error al cambiar el estado de favorito:', error);
+        }
+    };
 
     return (
-        <ScrollView style={styles.container} >
-
+        <ScrollView style={styles.container}>
             <Text style={styles.title}>{title || name}</Text>
             <View style={styles.favoriteContainer}>
                 <Image
                     source={{
-                        uri: poster_path !== null
-                            ? `https://image.tmdb.org/t/p/original/${poster_path}`
-                            : 'https://i.ibb.co/WKtwrKQ/404-Poster-Not-Found-v2.jpg',
+                        uri:
+                            poster_path !== null
+                                ? `https://image.tmdb.org/t/p/original/${poster_path}`
+                                : 'https://i.ibb.co/WKtwrKQ/404-Poster-Not-Found-v2.jpg',
                     }}
                     style={{
                         width: 320,
                         height: 400,
-
                     }}
                     resizeMode="cover"
                 />
                 <View style={styles.favorite}>
-                    {isFavorite ? (
-                        <AntDesign name="heart" size={36} color="red" onPress={() => setIsFavorite(false)} />
-                    ) : (
-                        <AntDesign name="hearto" size={36} color="red" onPress={() => setIsFavorite(true)} />
-                    )}
+                    <TouchableOpacity onPress={toggleFavorite}>
+                        <AntDesign
+                            name={isFavorite ? 'heart' : 'hearto'}
+                            size={36}
+                            color="red"
+                        />
+                    </TouchableOpacity>
                 </View>
             </View>
             <Text style={{ fontFamily: 'JosefinBold', fontSize: 20, marginVertical: 10, color: colors.rateMovieDetail }}>
@@ -54,13 +89,9 @@ const MovieDetail = ({ route }) => {
                 {getGenreNames(genre_ids)}
             </Text>
             <Text style={styles.overview}>{overview}</Text>
-
-
-        </ScrollView >
-    )
-}
-
-export default MovieDetail
+        </ScrollView>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -91,6 +122,7 @@ const styles = StyleSheet.create({
         color: colors.textMovieDetail,
         fontSize: 20,
         marginBottom: 20,
-    }
+    },
+});
 
-})
+export default MovieDetail;

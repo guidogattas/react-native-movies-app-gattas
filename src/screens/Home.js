@@ -5,6 +5,7 @@ import TrendingMovies from '../components/TrendingMovies';
 import TrendingSeries from '../components/TrendingSeries';
 import TopRatedMovies from '../components/TopRatedMovies';
 import DiscoverMovies from '../components/DiscoverMovies';
+import FavoritesMovies from '../components/FavoritesMovies';
 
 
 const Home = () => {
@@ -20,6 +21,7 @@ const Home = () => {
         <TrendingSeries />
         <TopRatedMovies />
         <DiscoverMovies />
+        <FavoritesMovies />
       </View>
     </ScrollView>
   );

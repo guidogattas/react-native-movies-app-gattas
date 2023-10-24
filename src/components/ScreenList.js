@@ -46,7 +46,7 @@ const ScreenList = ({ title, data }) => {
                                         }}
                                         style={{
                                             width: width * 0.8,
-                                            height: height * 0.25,
+                                            height: height * 0.5,
                                         }}
                                         resizeMode="cover"
                                         className="rounded-3xl"

@@ -7,6 +7,7 @@ const authSlice = createSlice({
     initialState: {
         user: null,
         idToken: null,
+        uid: null,
     },
 
     reducers: {
@@ -18,6 +19,9 @@ const authSlice = createSlice({
             state.idToken = action.payload;
             AsyncStorage.setItem('userToken', JSON.stringify(action.payload));
         },
+        setUid: (state, action) => {
+            state.uid = action.payload;
+        },
         clearUser: (state) => {
             state.user = null;
             state.idToken = null;
@@ -27,6 +31,6 @@ const authSlice = createSlice({
     },
 });
 
-export const { setIdToken, setUser, clearUser } = authSlice.actions;
+export const { setIdToken, setUser, setUid, clearUser } = authSlice.actions;
 
 export default authSlice.reducer;

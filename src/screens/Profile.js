@@ -1,31 +1,28 @@
 import React, { useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import Header from '../components/Header';
-import { usePutImageMutation, useGetImageQuery } from '../services/ecApi';
-import { useDispatch } from 'react-redux';
+import { useGetImageQuery } from '../services/ecApi';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearUser } from '../redux/slice/authSlice';
-import { Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import * as Location from 'expo-location';
 import { Alert } from 'react-native';
 import { colors } from '../theme/colors';
+import { getDatabase, ref, set } from 'firebase/database';
 
-const Profile = ({ navigation }) => {
+
+const database = getDatabase()
+const Profile = () => {
 
     const defaultImage = "https://st2.depositphotos.com/1104517/11967/v/950/depositphotos_119675554-stock-illustration-male-avatar-profile-picture-vector.jpg";
 
-
-    // Traemos del ecApi la función de Redux Toolkit Query para agregar o modificar la imágen de Firebase.
-    const [putImage, result] = usePutImageMutation()
-
-    // Con data, obtenemos los datos recuperados de Firebase, en el caso que exista (sino nos devuelve la defaultImage), y con refetch va a actualizar la imágen nueva que le pasamos a la imágen de Firebase
-    const { data, isLoading, refetch } = useGetImageQuery();
-
-    const [location, setLocation] = useState(null)
-
     const dispatch = useDispatch()
+    const uid = useSelector((state) => state.authSlice.uid);
 
-    // Función para cerrar la sesión del usuario, primero le solicitamos la confirmación por Alert, en el caso que acepte va a ejecutar la función traída de Redux y va a pasar el estado del user y el idToken a null, así como también nos va a remover los datos del storage, por lo que va a volver a la pantalla de Authentication.
+    const { data, isLoading, refetch } = useGetImageQuery(uid);
+
+
+    const [selectedImage, setSelectedImage] = useState(null);
 
     const onLogout = () => {
         Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
@@ -48,10 +45,11 @@ const Profile = ({ navigation }) => {
         });
 
         if (!result.canceled) {
-            await putImage({
-                image: `data:image/jpeg;base64,${result.assets[0].base64}`,
-            });
-            refetch();
+            const image = `data:image/jpeg;base64,${result.assets[0].base64}`;
+            setSelectedImage(image);
+            const userImageRef = ref(database, `users/${uid}/image`);
+            set(userImageRef, image);
+            refetch()
         }
     };
 
@@ -68,23 +66,17 @@ const Profile = ({ navigation }) => {
                 quality: 1,
             });
             if (!result.canceled) {
-                await putImage({
-                    image: `data:image/jpeg;base64,${result.assets[0].base64}`,
-                });
-                refetch();
+                const image = `data:image/jpeg;base64,${result.assets[0].base64}`;
+                setSelectedImage(image);
+
+                // Subir la imagen a Firebase Realtime Database
+                const userImageRef = ref(database, `users/${uid}/image`);
+                set(userImageRef, image);
+                refetch()
             }
         }
     };
-    const getCoords = async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-            setErrorMsg('Permiso denegado');
-            return;
-        }
-        let location = await Location.getCurrentPositionAsync({});
-        setLocation(location);
-        navigation.navigate('mapaLoc', { location })
-    }
+
 
     return (
         <View style={styles.container}>
@@ -96,7 +88,7 @@ const Profile = ({ navigation }) => {
                     <View>
                         <Image
                             style={styles.image}
-                            source={{ uri: data ? data.image : defaultImage }}
+                            source={{ uri: data ? data : defaultImage }}
                         />
                     </View>
                     <View style={styles.pressablesContainer}>
@@ -111,14 +103,6 @@ const Profile = ({ navigation }) => {
                                 <MaterialIcons name="add-photo-alternate" size={40} color={colors.profileButton} />
                             </Pressable>
                             <Text style={styles.textPressable}>Abrir Galería de Fotos</Text>
-                        </View>
-                        <View style={styles.pressableContainer}>
-                            <Pressable style={styles.pressableButton}
-                                onPress={() => getCoords()}
-                            >
-                                <Feather name="map-pin" size={40} color={colors.profileButton} />
-                            </Pressable>
-                            <Text style={styles.textPressable}>Abrir Mapa</Text>
                         </View>
                         <View style={styles.pressableLogoutContainer}>
                             <Pressable onPress={onLogout} style={styles.pressableButton}>

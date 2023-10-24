@@ -14,8 +14,6 @@ import GenreList from './GenreList';
 const { width, height } = Dimensions.get('window');
 
 
-
-
 const Search = () => {
 
     // Creamos la variable searchResults para ver si es mayor a 0 su length, que nos muestre los resultados de la búsqueda, y en caso de no ser mayor a 0, mostramos los géneros de las películas, para poder navegar en ellos.
@@ -31,7 +29,7 @@ const Search = () => {
         }
     };
 
-    // Creamos la función asíncrona para la búsqueda de películas, le pasamos por parámetro la query, que se lo vamos a pasar por el valor del onChangeText del TextInput, y ese resultado lo vamos a pasar por dispatch a setSerachResults con la data recibida, y es lo que va a hacer que modifique el length de searchResults
+    // Creamos la función asíncrona para la búsqueda de películas, le pasamos por parámetro la query, que se lo vamos a pasar por el valor del onChangeText del TextInput, y ese resultado lo vamos a pasar por dispatch a setSearchResults con la data recibida, y es lo que va a hacer que modifique el length de searchResults
     const performSearch = async (query) => {
         try {
             const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=es-AR&page=1`, options);
