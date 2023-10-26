@@ -22,8 +22,6 @@ const Register = ({ navigation }) => {
             const user = response.user;
             const uid = user.uid;
 
-            // console.log('EL UID ES: ', uid);
-
             const userData = {
                 email: user.email,
             };
@@ -32,6 +30,8 @@ const Register = ({ navigation }) => {
             const db = getDatabase();
 
             const userRef = ref(db, 'users/' + uid);
+
+            // Escribimos los datos del usuario en la base de datos
             await set(userRef, userData);
 
             navigation.navigate('login');

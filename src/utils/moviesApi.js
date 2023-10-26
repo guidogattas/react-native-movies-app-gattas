@@ -19,7 +19,7 @@ export const fetchTrendingMovies = () => {
     return fetch('https://api.themoviedb.org/3/trending/movie/day?language=es-AR', options)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Error en moviesApi.js Status: ${response.status}`);
+                throw new Error(`Error en moviesApi.js fetchTrendingMovies Status: ${response.status}`);
             }
             return response.json();
         })
@@ -36,7 +36,7 @@ export const fetchTrendingSeries = () => {
     return fetch('https://api.themoviedb.org/3/trending/tv/day?language=es-AR', options)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Error en moviesApi.js Status: ${response.status}`);
+                throw new Error(`Error en moviesApi.js fetchTrendingSeries Status: ${response.status}`);
             }
             return response.json();
         })
@@ -56,7 +56,7 @@ export const fetchTopRatedMovies = () => {
     return fetch(`https://api.themoviedb.org/3/movie/top_rated?language=es-AR&page=${randomNumber}`, options)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Error en moviesApi.js Status: ${response.status}`);
+                throw new Error(`Error en moviesApi.js fetchTopRatedMovies Status: ${response.status}`);
             }
             return response.json();
         })
@@ -73,7 +73,7 @@ export const fetchDiscoverMovies = () => {
     return fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=es-AR&page=1&sort_by=popularity.desc', options)
         .then(response => {
             if (!response.ok) {
-                throw new Error(`Error en moviesApi.js Status: ${response.status}`);
+                throw new Error(`Error en moviesApi.js fetchDiscoverMovies Status: ${response.status}`);
             }
             return response.json();
         })
@@ -84,22 +84,4 @@ export const fetchDiscoverMovies = () => {
             console.error(err);
         });
 }
-
-export const fetchFavoritesMovies = (id) => {
-    return fetch(`https://api.themoviedb.org/3/movie/${id}/favorite?api_key=${apiKeyAuth}`, options)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`Error en moviesApi.js Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            return data;
-        })
-        .catch(err => {
-            console.error(err);
-        });
-
-}
-
 

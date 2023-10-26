@@ -23,7 +23,7 @@ const homeSlice = createSlice({
         },
         setDiscoverMovies: (state, action) => {
             state.discoverMovies = action.payload
-        }
+        },
 
     }
 })

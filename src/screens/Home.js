@@ -6,6 +6,7 @@ import TrendingSeries from '../components/TrendingSeries';
 import TopRatedMovies from '../components/TopRatedMovies';
 import DiscoverMovies from '../components/DiscoverMovies';
 import FavoritesMovies from '../components/FavoritesMovies';
+import { useSelector } from 'react-redux';
 
 
 const Home = () => {
@@ -18,7 +19,6 @@ const Home = () => {
     <ScrollView style={styles.container}>
       <View style={styles.containerDisplay}>
         <TrendingMovies />
-        <TrendingSeries />
         <TopRatedMovies />
         <DiscoverMovies />
         <FavoritesMovies />

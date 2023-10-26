@@ -4,6 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { getDatabase, ref, set, get } from 'firebase/database';
 import { colors } from '../theme/colors';
 import { useSelector } from 'react-redux';
+import { useGetFavoritesQuery } from '../services/ecApi';
 
 // TRAEMOS LOS GÉNEROS Y LOS COMPARAMOS CON LOS QUE TRAEMOS POR PARAMS PARA MOSTRAR LOS GÉNEROS DE LA PELÍCULA:
 const genres = require('../data/genres.json');
@@ -18,16 +19,17 @@ const getGenreNames = (genreIds) => {
 const MovieDetail = ({ route }) => {
     const database = getDatabase();
     const uid = useSelector((state) => state.authSlice.uid);
-    console.log(uid)
 
-
+    // Utiliza el hook useGetFavoritesQuery para obtener los favoritos
+    const { refetch } = useGetFavoritesQuery(uid);
 
     const [isFavorite, setIsFavorite] = useState(false);
-    const { name, title, poster_path, overview, vote_average, genre_ids, id } = route.params;
+    const { name, title, poster_path, overview, vote_average, genre_ids, genres, id } = route.params;
 
     // Función para obtener el estado actual de favorito desde la base de datos
     const fetchFavoriteStatus = async () => {
         const userFavoriteRef = ref(database, `users/${uid}/favorites/${id}`);
+        // Verifica si el usuario tiene un favorito, si tiene un favorito, lo guarda en isFavorite
         try {
             const snapshot = await get(userFavoriteRef);
             setIsFavorite(snapshot.exists());
@@ -39,10 +41,13 @@ const MovieDetail = ({ route }) => {
     // Cargar el estado de favorito al cargar la pantalla
     useEffect(() => {
         fetchFavoriteStatus();
-    }, []);
+        refetch();
+    }, [isFavorite]);
 
     const toggleFavorite = async () => {
         const userFavoriteRef = ref(database, `users/${uid}/favorites/${id}`);
+        // La función de la base de datos cambia dependiendo de si el usuario tiene o no un favorito, si tiene un favorito, cuando realiza la función va a pasar el valor a null, y si no tiene un favorito, va a pasar el valor a id que lo traemos por params
+
         try {
             if (isFavorite) {
                 await set(userFavoriteRef, null);
@@ -50,7 +55,8 @@ const MovieDetail = ({ route }) => {
                 await set(userFavoriteRef, id);
             }
             setIsFavorite(!isFavorite);
-        } catch (error) {
+        }
+        catch (error) {
             console.error('Error al cambiar el estado de favorito:', error);
         }
     };
@@ -85,9 +91,16 @@ const MovieDetail = ({ route }) => {
             <Text style={{ fontFamily: 'JosefinBold', fontSize: 20, marginVertical: 10, color: colors.rateMovieDetail }}>
                 PUNTAJE: ⭐{vote_average > 0 ? vote_average.toFixed(2) : 'Sin Calificación'}
             </Text>
-            <Text style={{ fontFamily: 'JosefinBold', fontSize: 16, marginVertical: 6, color: colors.genresMovieDetail }}>
-                {getGenreNames(genre_ids)}
-            </Text>
+            {genre_ids ?
+                <Text style={{ fontFamily: 'JosefinBold', fontSize: 16, marginVertical: 6, color: colors.genresMovieDetail }}>
+                    {getGenreNames(genre_ids)}
+                </Text>
+                :
+                <Text style={{ fontFamily: 'JosefinBold', fontSize: 16, marginVertical: 6, color: colors.genresMovieDetail }}>
+                    {genres.map(genre => genre.name).join(', ')}
+                </Text>
+            }
+
             <Text style={styles.overview}>{overview}</Text>
         </ScrollView>
     );
@@ -113,7 +126,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 2,
         top: 10,
-        backgroundColor: 'rgba(05, 0, 0, 0.3)',
+        backgroundColor: 'rgba(0, 0, 0, 0.3)',
         borderRadius: 50,
         padding: 10,
     },

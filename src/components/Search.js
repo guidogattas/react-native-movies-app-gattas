@@ -32,6 +32,8 @@ const Search = () => {
     // Creamos la función asíncrona para la búsqueda de películas, le pasamos por parámetro la query, que se lo vamos a pasar por el valor del onChangeText del TextInput, y ese resultado lo vamos a pasar por dispatch a setSearchResults con la data recibida, y es lo que va a hacer que modifique el length de searchResults
     const performSearch = async (query) => {
         try {
+            // Si queremos que sea una búsqueda de películas y series hay que cambiar el valor de movie a multi
+
             const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=es-AR&page=1`, options);
             const data = await response.json();
             dispatch(setSearchResults(data.results));

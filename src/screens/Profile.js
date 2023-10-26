@@ -20,8 +20,6 @@ const Profile = () => {
     const uid = useSelector((state) => state.authSlice.uid);
 
     const { data, isLoading, refetch } = useGetImageQuery(uid);
-
-
     const [selectedImage, setSelectedImage] = useState(null);
 
     const onLogout = () => {
@@ -47,10 +45,14 @@ const Profile = () => {
         if (!result.canceled) {
             const image = `data:image/jpeg;base64,${result.assets[0].base64}`;
             setSelectedImage(image);
+
+            // Subimos la imagen a Firebase Realtime Database
             const userImageRef = ref(database, `users/${uid}/image`);
             set(userImageRef, image);
             refetch()
+
         }
+
     };
 
     const openCamera = async () => {
@@ -72,7 +74,7 @@ const Profile = () => {
                 // Subir la imagen a Firebase Realtime Database
                 const userImageRef = ref(database, `users/${uid}/image`);
                 set(userImageRef, image);
-                refetch()
+                refetch();
             }
         }
     };

@@ -1,66 +1,60 @@
-import React, { useEffect } from 'react'
-import { StyleSheet } from 'react-native'
-import { NavigationContainer } from '@react-navigation/native'
-
-import AuthNav from './AuthNav'
-import TabNav from './TabNav'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import AuthNav from './AuthNav';
+import TabNav from './TabNav';
+import { useSelector, useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setUser } from '../redux/slice/authSlice'
-
-/** Componente de navegación principal que gestiona la autenticación y la navegación de la aplicación.*/
+import { setUid, setUser } from '../redux/slice/authSlice';
 
 const MainNav = () => {
-
-
-    /**
-     * Este componente utiliza `AsyncStorage` para verificar si hay datos de usuario almacenados localmente.
-     * Si se encuentran datos de usuario válidos (es decir si user es truthy), el usuario se considera autenticado y se muestra la navegación de pestañas (TabNav).
-     * Si no se encuentran datos de usuario, se muestra la navegación de autenticación (para hacer el login o crear el usuario). 
-     */
-
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.authSlice.user);
+    const uid = useSelector((state) => state.authSlice.uid);
+    const [isLoading, setIsLoading] = useState(true);
 
 
-    /**
-     * Hook que recupera los datos de usuario almacenados localmente.
-     * Si se encuentran datos de usuario, se establece el estado de autenticación.
-     * Con esto, si es que hay un userData en el storage, user pasa a ser truthy y nos mostraría
-     * la TabNav.
-    */
+    // Cuando se monta el componente corroboramos si hay un usuario logueado en el storage, si es así, lo guardamos en redux, sino nos va a llevar al AuthNav
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const userData = await AsyncStorage.getItem('userData');
+                const uid = await AsyncStorage.getItem('uid');
+
                 if (userData) {
                     dispatch(setUser(JSON.parse(userData)));
+                    dispatch(setUid(JSON.parse(uid)));
                 }
             } catch (error) {
-                console.error(
-                    'Error al recuperar datos de usuario en navigation/MainNav:', error
-                );
+                console.error('Error al recuperar datos de usuario en navigation/MainNav:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchUserData();
     }, []);
 
-    return (
-        <NavigationContainer style={styles.container} >
-            {
-                user
-                    ? <TabNav />
-                    : <AuthNav />
-            }
-        </NavigationContainer>
-    )
-}
+    if (isLoading) {
+        return (
+            <View style={styles.container}>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        );
+    }
 
-export default MainNav
+    return (
+        <NavigationContainer style={styles.container}>
+            {user ? <TabNav /> : <AuthNav />}
+        </NavigationContainer>
+    );
+};
+
+export default MainNav;
 
 const styles = StyleSheet.create({
     container: {
         height: '100%',
         flex: 1,
-    }
-})
+    },
+});

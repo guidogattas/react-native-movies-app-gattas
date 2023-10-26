@@ -1,11 +1,10 @@
-import { View, Text } from 'react-native'
 import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import Search from '../components/Search'
 import MovieDetail from '../screens/MovieDetail'
 import GenreDetail from '../screens/GenreDetail'
 import { colors } from '../theme/colors'
-import { StyleSheet } from 'react-native'
+
 
 
 const Stack = createNativeStackNavigator()
