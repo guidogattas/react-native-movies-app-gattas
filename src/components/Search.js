@@ -33,8 +33,7 @@ const Search = () => {
     const performSearch = async (query) => {
         try {
             // Si queremos que sea una búsqueda de películas y series hay que cambiar el valor de movie a multi
-
-            const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=es-AR&page=1`, options);
+            const response = await fetch(`https://api.themoviedb.org/3/search/multi?query=${query}&include_adult=false&language=es-AR&page=1`, options);
             const data = await response.json();
             dispatch(setSearchResults(data.results));
         } catch (error) {
