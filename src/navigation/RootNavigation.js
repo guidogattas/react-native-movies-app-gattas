@@ -30,7 +30,7 @@ const RootNavigation = () => {
                     ...headerOptions(''),
                     headerLeft: () => (
                         <Text style={{ ...headerOptions('').headerTitleStyle, marginLeft: 10 }}>
-                            Watch Movies
+                            WATCH MOVIES 🎦
                         </Text>
                     ),
                 }}

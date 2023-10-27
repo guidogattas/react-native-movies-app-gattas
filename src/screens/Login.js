@@ -59,7 +59,7 @@ const Login = ({ navigation }) => {
             </Pressable>
             <Pressable style={styles.registerButton}
                 onPress={() => navigation.navigate('register')}>
-                <Text style={styles.textRegisterButton}>No tenés cuenta?, Presioná aquí</Text>
+                <Text style={styles.textRegisterButton}>¿No tenés cuenta?, Presioná aquí</Text>
             </Pressable>
         </View>
     )
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     textRegisterButton: {
         marginTop: 20,
         fontFamily: 'JosefinRegular',
-        fontSize: 14,
+        fontSize: 16,
         color: colors.textinput
     }
 })
