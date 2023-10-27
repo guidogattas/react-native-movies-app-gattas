@@ -17,4 +17,5 @@ Esta es una aplicación móvil desarrollada con React Native, Firebase y Expo, q
 ![Captura de pantalla2](https://snipboard.io/uap5eJ.jpg)
 ![Captura de pantalla3](https://snipboard.io/nesuxM.jpg)
 
-
+LINK AL APK:
+https://expo.dev/artifacts/eas/qvJwYmahxkRgq8atQEKYwu.apk
