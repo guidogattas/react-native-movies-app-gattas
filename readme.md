@@ -13,7 +13,7 @@ Esta es una aplicación móvil desarrollada con React Native, Firebase y Expo, q
 - Exploración de diferentes categorías de películas, incluyendo tendencias, películas mejor calificadas y una selección general.
 - Posibilidad de guardar películas en la lista de Favoritos, con acceso desde la pantalla principal.
 
-![Captura de Pantalla](https://snipboard.io/AtrId7.jpg)
+![Captura de Pantalla](https://snipboard.io/uhCsQJ.jpg)
 ![Captura de pantalla2](https://snipboard.io/uap5eJ.jpg)
 ![Captura de pantalla3](https://snipboard.io/nesuxM.jpg)
 
