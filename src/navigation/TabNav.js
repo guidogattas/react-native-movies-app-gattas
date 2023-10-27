@@ -20,11 +20,7 @@ const TabNav = () => {
 
     const uid = useSelector((state) => state.authSlice.uid);
 
-    // Imágen por defecto si no hay una imágen cargada en la base de datos.
     const defaultImage = "https://st2.depositphotos.com/1104517/11967/v/950/depositphotos_119675554-stock-illustration-male-avatar-profile-picture-vector.jpg";
-
-    // Data de imágen traída de ecApi.js del builder.query image.json desde Firebase
-    const { data } = useGetImageQuery(uid);
 
     const Tab = createBottomTabNavigator();
 
@@ -51,7 +47,7 @@ const TabNav = () => {
                     tabBarIcon: ({ focused }) =>
                         <Image
                             style={focused ? styles.image : styles.imageNotFocused}
-                            source={{ uri: data ? data : defaultImage }}
+                            source={{ uri: defaultImage }}
                         />
                 }}
             />

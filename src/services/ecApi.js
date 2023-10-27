@@ -17,7 +17,7 @@ export const ecApi = createApi({
 
         // Agregar o actualizar una imagen en la base de datos Firebase.
         putImage: builder.mutation({
-            query: ({ image, uid }) => ({
+            query: ({ uid, image }) => ({
                 url: `users/${uid}/image.json`,
                 method: "PUT",
                 body: image,
@@ -43,7 +43,9 @@ export const ecApi = createApi({
     }),
 })
 
-export const { useGetImageQuery,
+export const {
+    useGetImageQuery,
     usePutImageMutation,
     useAddUserMutation,
-    useGetFavoritesQuery } = ecApi;
+    useGetFavoritesQuery
+} = ecApi;

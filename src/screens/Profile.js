@@ -1,26 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import Header from '../components/Header';
-import { useGetImageQuery } from '../services/ecApi';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearUser } from '../redux/slice/authSlice';
 import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { Alert } from 'react-native';
 import { colors } from '../theme/colors';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, get, set } from 'firebase/database';
 
+const database = getDatabase();
 
-const database = getDatabase()
 const Profile = () => {
-
     const defaultImage = "https://st2.depositphotos.com/1104517/11967/v/950/depositphotos_119675554-stock-illustration-male-avatar-profile-picture-vector.jpg";
-
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const uid = useSelector((state) => state.authSlice.uid);
-
-    const { data, isLoading, refetch } = useGetImageQuery(uid);
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [userImage, setUserImage] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const onLogout = () => {
         Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
@@ -30,8 +26,29 @@ const Profile = () => {
             },
             { text: 'Si', onPress: () => dispatch(clearUser()) },
         ]);
+    };
 
-    }
+    // Función para obtener la imagen de la base de datos. Si existe la pasamos a userImage, si no existe pasamos la imágen por defecto. 
+    const fetchImage = async () => {
+        try {
+            const userImageRef = ref(database, `users/${uid}/image`);
+            const snapshot = await get(userImageRef);
+            if (snapshot.exists()) {
+                const image = snapshot.val();
+                setUserImage(image);
+            } else {
+                setUserImage(defaultImage);
+            }
+        } catch (error) {
+            console.error('Error al obtener la imagen:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchImage();
+    }, []);
 
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -44,15 +61,15 @@ const Profile = () => {
 
         if (!result.canceled) {
             const image = `data:image/jpeg;base64,${result.assets[0].base64}`;
-            setSelectedImage(image);
-
-            // Subimos la imagen a Firebase Realtime Database
             const userImageRef = ref(database, `users/${uid}/image`);
-            set(userImageRef, image);
-            refetch()
-
+            set(userImageRef, image)
+                .then(() => {
+                    fetchImage(); // Actualizar la imagen después de cargarla
+                })
+                .catch((error) => {
+                    console.error('Error al guardar la imagen:', error);
+                });
         }
-
     };
 
     const openCamera = async () => {
@@ -69,28 +86,29 @@ const Profile = () => {
             });
             if (!result.canceled) {
                 const image = `data:image/jpeg;base64,${result.assets[0].base64}`;
-                setSelectedImage(image);
-
-                // Subir la imagen a Firebase Realtime Database
                 const userImageRef = ref(database, `users/${uid}/image`);
-                set(userImageRef, image);
-                refetch();
+                set(userImageRef, image)
+                    .then(() => {
+                        fetchImage(); // Actualizar la imagen después de cargarla
+                    })
+                    .catch((error) => {
+                        console.error('Error al guardar la imagen:', error);
+                    });
             }
         }
     };
 
-
     return (
         <View style={styles.container}>
             <Header title='Mi Perfil' />
-            {isLoading
-                ? <ActivityIndicator size="large" color="#00ff00" />
-                :
+            {isLoading ? (
+                <ActivityIndicator size="large" color="#00ff00" />
+            ) : (
                 <>
                     <View>
                         <Image
                             style={styles.image}
-                            source={{ uri: data ? data : defaultImage }}
+                            source={{ uri: userImage ? userImage : defaultImage }}
                         />
                     </View>
                     <View style={styles.pressablesContainer}>
@@ -114,7 +132,7 @@ const Profile = () => {
                         </View>
                     </View>
                 </>
-            }
+            )}
         </View>
     );
 };
@@ -123,7 +141,7 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         backgroundColor: colors.backgroundColor,
-        flex: 1
+        flex: 1,
     },
     image: {
         marginTop: 20,
@@ -149,7 +167,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 80,
         marginLeft: 10,
-    }
+    },
 });
 
 export default Profile;
