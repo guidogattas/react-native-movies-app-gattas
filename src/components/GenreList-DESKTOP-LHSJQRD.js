@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import { colors } from '../theme/colors';
 import { FlatList } from 'react-native';
 
@@ -30,12 +29,13 @@ export default GenreList;
 
 const styles = StyleSheet.create({
     text: {
-        color: colors.white,
+        color: colors.genreButtonFont,
         fontSize: 20,
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'JosefinBold',
     },
     button: {
-        backgroundColor: colors.lightOrange,
+        backgroundColor: colors.genreButtonBackground,
         borderRadius: 8,
         margin: 10,
         padding: 10,

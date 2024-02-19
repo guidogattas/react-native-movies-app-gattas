@@ -10,40 +10,18 @@ export const ecApi = createApi({
 
     endpoints: (builder) => ({
 
-        // Obtener una imagen de la base de datos Firebase.
+        //FIREBASE
         getImage: builder.query({
-            query: (uid) => `users/${uid}/image.json`,
+            query: () => "image.json",
         }),
-
-        // Agregar o actualizar una imagen en la base de datos Firebase.
         putImage: builder.mutation({
-            query: ({ image, uid }) => ({
-                url: `users/${uid}/image.json`,
+            query: (image) => ({
+                url: "image.json",
                 method: "PUT",
                 body: image,
             }),
-        }),
-        // Agregar User a la base de datos Firebase para pasarle data.
-
-        addUser: builder.mutation({
-            query: ({ email, uid }) => ({
-                url: `users/${uid}.json`,
-                method: "POST",
-                body: {
-                    email,
-                },
-            }),
-        }),
-
-
-        // Obtener los favoritos de cada usuario
-        getFavorites: builder.query({
-            query: (uid) => `users/${uid}/favorites.json`,
-        }),
+        })
     }),
 })
 
-export const { useGetImageQuery,
-    usePutImageMutation,
-    useAddUserMutation,
-    useGetFavoritesQuery } = ecApi;
+export const { useGetImageQuery, usePutImageMutation } = ecApi;

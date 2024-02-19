@@ -1,6 +1,6 @@
 {
-  "name": "myecommerce",
-  "version": "1.0.0",
+  "name": "my-movies-app",
+  "version": "1.0.1",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^19.0.0",
-    "@react-native-async-storage/async-storage": "1.18.2",
+    "@react-native-async-storage/async-storage": "^1.19.3",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
@@ -20,7 +20,7 @@
     "expo-image-picker": "~14.3.2",
     "expo-location": "~16.1.0",
     "expo-status-bar": "~1.6.0",
-    "expo-updates": "~0.18.19",
+    "expo-updates": "~0.18.17",
     "firebase": "^10.4.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",

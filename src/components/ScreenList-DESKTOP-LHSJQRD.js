@@ -22,7 +22,7 @@ const ScreenList = ({ title, data }) => {
         <View style={styles.container}>
             {!data ? (
                 <View>
-                    <ActivityIndicator size="large" color="#00ff00" />
+                    <ActivityIndicator size="large" color={colors.activityIndicator} />
                 </View>
             ) : (
                 <>
@@ -46,7 +46,7 @@ const ScreenList = ({ title, data }) => {
                                         }}
                                         style={{
                                             width: width * 0.8,
-                                            height: height * 0.25,
+                                            height: height * 0.5,
                                         }}
                                         resizeMode="cover"
                                         className="rounded-3xl"
@@ -80,7 +80,7 @@ const styles = {
     },
     title: {
         fontFamily: 'JosefinBold',
-        color: colors.lightOrange,
+        color: colors.screenListHome,
         fontSize: 20,
         marginTop: 30,
         marginBottom: 20,
@@ -90,8 +90,8 @@ const styles = {
         position: 'absolute',
         left: 6,
         top: 6,
-        color: colors.black,
-        backgroundColor: colors.lightOrange,
+        color: colors.voteFont,
+        backgroundColor: colors.voteBackground,
         padding: 4,
         borderRadius: 10,
         fontFamily: 'JosefinBold',
@@ -108,7 +108,7 @@ const styles = {
         alignItems: 'center',
     },
     titleText: {
-        color: 'white',
+        color: colors.screenListTitleMovie,
         fontSize: 18,
     },
 };

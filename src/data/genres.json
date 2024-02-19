@@ -1,32 +1,27 @@
 [
   {
     "id": 28,
-    "name": "Acción"
-  },
-  {
-    "id": 16,
-    "name": "Animación"
+    "name": "Action"
   },
   {
     "id": 12,
-    "name": "Aventuras"
+    "name": "Adventure"
   },
-
   {
-    "id": 878,
-    "name": "Ciencia Ficción"
+    "id": 16,
+    "name": "Animation"
   },
   {
     "id": 35,
-    "name": "Comedia"
+    "name": "Comedy"
   },
   {
     "id": 80,
-    "name": "Crimen"
+    "name": "Crime"
   },
   {
     "id": 99,
-    "name": "Documental"
+    "name": "Documentary"
   },
   {
     "id": 18,
@@ -34,47 +29,48 @@
   },
   {
     "id": 10751,
-    "name": "Familia"
+    "name": "Family"
   },
   {
     "id": 14,
-    "name": "Fantasia"
-  },
-  {
-    "id": 10752,
-    "name": "Guerra"
+    "name": "Fantasy"
   },
   {
     "id": 36,
-    "name": "Historia"
+    "name": "History"
   },
-
+  {
+    "id": 27,
+    "name": "Horror"
+  },
   {
     "id": 10402,
-    "name": "Musical"
+    "name": "Music"
   },
   {
     "id": 9648,
-    "name": "Misterio"
-  },
-  {
-    "id": 10770,
-    "name": "Película TV"
+    "name": "Mystery"
   },
   {
     "id": 10749,
     "name": "Romance"
   },
   {
-    "id": 27,
-    "name": "Terror"
+    "id": 878,
+    "name": "Science Fiction"
   },
-
+  {
+    "id": 10770,
+    "name": "TV Movie"
+  },
   {
     "id": 53,
     "name": "Thriller"
   },
-
+  {
+    "id": 10752,
+    "name": "War"
+  },
   {
     "id": 37,
     "name": "Western"

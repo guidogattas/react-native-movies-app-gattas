@@ -15,6 +15,9 @@ const { width, height } = Dimensions.get('window');
 
 
 const Search = () => {
+
+    // Creamos la variable searchResults para ver si es mayor a 0 su length, que nos muestre los resultados de la búsqueda, y en caso de no ser mayor a 0, mostramos los géneros de las películas, para poder navegar en ellos.
+
     const searchResults = useSelector((state) => state.searchSlice.searchResults);
     const dispatch = useDispatch();
 
@@ -25,8 +28,11 @@ const Search = () => {
             Authorization: `Bearer ${accessTokenAuth}`
         }
     };
+
+    // Creamos la función asíncrona para la búsqueda de películas, le pasamos por parámetro la query, que se lo vamos a pasar por el valor del onChangeText del TextInput, y ese resultado lo vamos a pasar por dispatch a setSearchResults con la data recibida, y es lo que va a hacer que modifique el length de searchResults
     const performSearch = async (query) => {
         try {
+            // Si queremos que sea una búsqueda de películas y series hay que cambiar el valor de movie a multi
             const response = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=es-AR&page=1`, options);
             const data = await response.json();
             dispatch(setSearchResults(data.results));
@@ -51,7 +57,7 @@ const Search = () => {
             <TextInput
                 style={styles.input}
                 onChangeText={(query) => performSearch(query)}
-                placeholder="Buscar película o serie..."
+                placeholder="Buscar película"
             />
             {searchResults.length > 0 ?
                 <FlatList
@@ -97,7 +103,7 @@ const Search = () => {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.heavyBlue,
+        backgroundColor: colors.backgroundColor,
         flex: 1
     },
 
@@ -105,35 +111,35 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: '95%',
         borderWidth: 3,
-        borderColor: colors.lightOrange,
+        borderColor: colors.borderSearch,
         borderRadius: 8,
         padding: 10,
         fontSize: 20,
-        backgroundColor: colors.white,
+        backgroundColor: colors.searchBackground,
         marginTop: 10,
     },
     resultItem: {
         margin: 10,
         padding: 10,
         borderWidth: 1,
-        borderColor: colors.lightOrange,
+        borderColor: colors.genreItemSearchBackground,
         borderRadius: 8,
-        justifyContent: 'center'
+        justifyContent: 'center',
 
     },
     title: {
         fontSize: 30,
         fontFamily: 'JosefinBold',
         marginBottom: 10,
-        color: colors.orange,
+        color: colors.movieTitleFont,
         textAlign: 'center'
     },
     vote: {
         position: 'absolute',
         left: 30,
         top: 10,
-        color: colors.black,
-        backgroundColor: colors.lightOrange,
+        color: colors.voteFont,
+        backgroundColor: colors.voteBackground,
         padding: 4,
         borderRadius: 10,
         fontFamily: 'JosefinBold',
@@ -144,7 +150,7 @@ const styles = StyleSheet.create({
         margin: 10,
         fontSize: 16,
         fontFamily: 'JosefinRegular',
-        color: colors.white,
+        color: colors.overviewFont,
     }
 });
 

@@ -1,35 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import Header from '../components/Header';
-import { usePutImageMutation, useGetImageQuery } from '../services/ecApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clearUser } from '../redux/slice/authSlice';
-import { Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
+import { Entypo, MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import * as Location from 'expo-location';
 import { Alert } from 'react-native';
 import { colors } from '../theme/colors';
+import { getDatabase, ref, get, set } from 'firebase/database';
 
-const Profile = ({ navigation }) => {
+const database = getDatabase();
 
+const Profile = () => {
     const defaultImage = "https://st2.depositphotos.com/1104517/11967/v/950/depositphotos_119675554-stock-illustration-male-avatar-profile-picture-vector.jpg";
+    const dispatch = useDispatch();
+    const uid = useSelector((state) => state.authSlice.uid);
+    const [userImage, setUserImage] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
-    const [putImage, result] = usePutImageMutation()
-    const { data, isLoading, isError, error, refetch } = useGetImageQuery();
-    const [location, setLocation] = useState(null)
-
-    const dispatch = useDispatch()
     const onLogout = () => {
-        // Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
-        //     {
-        //         text: 'No',
-        //         style: 'cancel',
-        //     },
-        //     { text: 'Si', onPress: () => dispatch(clearUser()) },
-        // ]);
+        Alert.alert('Cerrar sesión', '¿Estás seguro que deseas cerrar sesión?', [
+            {
+                text: 'No',
+                style: 'cancel',
+            },
+            { text: 'Si', onPress: () => dispatch(clearUser()) },
+        ]);
+    };
 
-        dispatch(clearUser())
-    }
+    // Función para obtener la imagen de la base de datos. Si existe la pasamos a userImage, si no existe pasamos la imágen por defecto. 
+    const fetchImage = async () => {
+        try {
+            const userImageRef = ref(database, `users/${uid}/image`);
+            const snapshot = await get(userImageRef);
+            if (snapshot.exists()) {
+                const image = snapshot.val();
+                setUserImage(image);
+            } else {
+                setUserImage(defaultImage);
+            }
+        } catch (error) {
+            console.error('Error al obtener la imagen:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchImage();
+    }, []);
 
     const pickImage = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -41,10 +60,15 @@ const Profile = ({ navigation }) => {
         });
 
         if (!result.canceled) {
-            await putImage({
-                image: `data:image/jpeg;base64,${result.assets[0].base64}`,
-            });
-            refetch();
+            const image = `data:image/jpeg;base64,${result.assets[0].base64}`;
+            const userImageRef = ref(database, `users/${uid}/image`);
+            set(userImageRef, image)
+                .then(() => {
+                    fetchImage(); // Actualizar la imagen después de cargarla
+                })
+                .catch((error) => {
+                    console.error('Error al guardar la imagen:', error);
+                });
         }
     };
 
@@ -61,67 +85,54 @@ const Profile = ({ navigation }) => {
                 quality: 1,
             });
             if (!result.canceled) {
-                await putImage({
-                    image: `data:image/jpeg;base64,${result.assets[0].base64}`,
-                });
-                refetch();
+                const image = `data:image/jpeg;base64,${result.assets[0].base64}`;
+                const userImageRef = ref(database, `users/${uid}/image`);
+                set(userImageRef, image)
+                    .then(() => {
+                        fetchImage(); // Actualizar la imagen después de cargarla
+                    })
+                    .catch((error) => {
+                        console.error('Error al guardar la imagen:', error);
+                    });
             }
         }
     };
-    const getCoords = async () => {
-        let { status } = await Location.requestForegroundPermissionsAsync();
-        if (status !== 'granted') {
-            setErrorMsg('Permiso denegado');
-            return;
-        }
-        let location = await Location.getCurrentPositionAsync({});
-        setLocation(location);
-        navigation.navigate('mapaLoc', { location })
-    }
 
     return (
         <View style={styles.container}>
             <Header title='Mi Perfil' />
-            {isLoading
-                ? <ActivityIndicator size="large" color="#00ff00" />
-                :
+            {isLoading ? (
+                <ActivityIndicator size="large" color="#00ff00" />
+            ) : (
                 <>
                     <View>
                         <Image
                             style={styles.image}
-                            source={{ uri: data ? data.image : defaultImage }}
+                            source={{ uri: userImage ? userImage : defaultImage }}
                         />
                     </View>
                     <View style={styles.pressablesContainer}>
                         <View style={styles.pressableContainer}>
                             <Pressable style={styles.pressableButton} onPress={() => openCamera()}>
-                                <Entypo name="camera" size={40} color={colors.orange} />
+                                <Entypo name="camera" size={40} color={colors.profileButton} />
                             </Pressable>
                             <Text style={styles.textPressable}>Abrir Cámara</Text>
                         </View>
                         <View style={styles.pressableContainer}>
                             <Pressable style={styles.pressableButton} onPress={() => pickImage()}>
-                                <MaterialIcons name="add-photo-alternate" size={40} color={colors.orange} />
+                                <MaterialIcons name="add-photo-alternate" size={40} color={colors.profileButton} />
                             </Pressable>
                             <Text style={styles.textPressable}>Abrir Galería de Fotos</Text>
                         </View>
-                        <View style={styles.pressableContainer}>
-                            <Pressable style={styles.pressableButton}
-                                onPress={() => getCoords()}
-                            >
-                                <Feather name="map-pin" size={40} color={colors.orange} />
-                            </Pressable>
-                            <Text style={styles.textPressable}>Abrir Mapa</Text>
-                        </View>
                         <View style={styles.pressableLogoutContainer}>
                             <Pressable onPress={onLogout} style={styles.pressableButton}>
-                                <MaterialIcons name="logout" size={30} color={colors.orange} />
+                                <MaterialIcons name="logout" size={30} color={colors.profileButton} />
                             </Pressable>
                             <Text style={styles.textPressable}>LOGOUT</Text>
                         </View>
                     </View>
                 </>
-            }
+            )}
         </View>
     );
 };
@@ -129,8 +140,8 @@ const Profile = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        backgroundColor: colors.heavyBlue,
-        flex: 1
+        backgroundColor: colors.backgroundColor,
+        flex: 1,
     },
     image: {
         marginTop: 20,
@@ -142,14 +153,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontFamily: 'JosefinBold',
         fontSize: 16,
-        color: colors.white
+        color: colors.profileText,
     },
     pressableContainer: {
         marginVertical: 20,
         flexDirection: "row",
         alignItems: "center",
-
-
     },
     pressableButton: {
         marginRight: 10,
@@ -158,9 +167,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 80,
         marginLeft: 10,
-
-
-    }
+    },
 });
 
 export default Profile;
