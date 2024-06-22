@@ -18,4 +18,4 @@ Esta es una aplicación móvil desarrollada con React Native, Firebase y Expo, q
 ![Captura de pantalla3](https://snipboard.io/nesuxM.jpg)
 
 LINK AL APK:
-https://expo.dev/artifacts/eas/qvJwYmahxkRgq8atQEKYwu.apk
+[https://expo.dev/artifacts/eas/qvJwYmahxkRgq8atQEKYwu.apk](https://expo.dev/artifacts/eas/u8QrmwiS8GbGXfLrqoAw95.apk)
